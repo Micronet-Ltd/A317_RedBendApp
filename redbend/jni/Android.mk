@@ -8,6 +8,6 @@ ROOT := $(ROOT)/..
 # it is assumed that the vDM libraries are already built
 include $(CLEAR_VARS)
 LOCAL_MODULE := libsmm
-LOCAL_SRC_FILES := ../../android_ndk46/android_native_R8b_ics/rls/libsmm.so
+LOCAL_SRC_FILES := ../../android_ndk46/android_native_R8b_ics/rls_dbginfo/libsmm.so
 include $(PREBUILT_SHARED_LIBRARY)
 

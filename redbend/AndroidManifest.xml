@@ -128,7 +128,7 @@
                 </intent-filter>
         </receiver>
         
-		<receiver android:enabled="true" android:name="com.redbend.swm_common.DmcDeviceAdminReceiver"
+		<receiver android:enabled="true" android:name="com.redbend.swm_common$DmcDeviceAdminReceiver"
                 android:permission="android.permission.BIND_DEVICE_ADMIN">
             <meta-data android:name="android.app.device_admin"
                        android:resource="@xml/dev_admin" />

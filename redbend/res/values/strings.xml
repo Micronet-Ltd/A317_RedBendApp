@@ -1,7 +1,7 @@
 
 <resources>
 <!-- Simple strings -->
-<string name="app_name">Software Management</string>
+<string name="app_name">Update</string>
 <string name="event_intent_permission_description">Allows the application to send and receive event_intents to SMM: get information and change device status</string>
 <!-- This is a complex string containing style runs. -->
 <string name="ok">OK</string>

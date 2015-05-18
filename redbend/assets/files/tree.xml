@@ -331,7 +331,7 @@
           <get/><replace/>
           <type>text/plain</type>
           <format>chr</format>
-          <value>http://update-package-location</value>
+          <value>http://micronet-lab.redbend.com:8080/VrmDLServerWEB/servlet/RequestDPServlet/DD/2470277429_dp/DomainName/DEFAULT</value>
         </leaf>
         <leaf>
           <name>PkgID</name>
@@ -378,7 +378,7 @@
           <leaf>
             <name>Addr</name>
             <copy/><delete/><get/><replace/>
-            <value>http://212.29.223.5/dm</value>
+            <value>http://GSD-OTA.micronet.co.il/dm</value>
           </leaf>
           <node>
             <name>Port</name>
@@ -557,13 +557,13 @@
       <name>Mod</name>
       <get/>
       <format>chr</format>
-      <value>Galaxy Nexus1</value>
-    </leaf>    
-     <leaf>
+      <value>MCE 307</value>
+    </leaf>
+    <leaf>
       <name>Man</name>
       <get/>
       <format>chr</format>
-      <value>Samsung</value>
+      <value>Micronet</value>
     </leaf>
     <leaf>
       <name>Lang</name>
@@ -580,7 +580,7 @@
       <name>DevId</name>
       <get/>
       <format>chr</format>
-      <value>IMEI: 123123123123</value>
+      <value>21000017</value>
     </leaf>
     <node>
       <name>Ext</name>

@@ -11,7 +11,7 @@ LOCAL_MODULE := libsmm
 
 LOCAL_CFLAGS := -Wall -DDEBUG -DVDM_PL_ANDROID
 
-LOCAL_LDLIBS := -L ../android_ndk46/android_native_R8b_ics/rls/ \
+LOCAL_LDLIBS := -L ../android_ndk46/android_native_R8b_ics/rls_dbginfo/ \
 				-libdmacoapp.a -libdma_jni.a -libdmammi.a -libua_handoff_installer.a -libvdmcomm.a \
 				-libvdmengine.a -libvdmfumo.a -libvdmipc.a -libvdmlawmo.a -libvdmplat.a -libvdmplclient.a \
 				-libvdmscinv.a -libvdmscomo.a -libvdmsmm.a -libvdmsmmpl.a -libvdmswmcpldevice.a \

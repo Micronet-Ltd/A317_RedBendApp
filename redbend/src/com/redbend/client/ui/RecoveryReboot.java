@@ -13,6 +13,12 @@ package com.redbend.client.ui;
 import java.io.File;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+//MIcronet
+import java.io.BufferedReader;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.OutputStream;
+ 
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -38,6 +44,12 @@ public class RecoveryReboot extends DilActivity {
 	private AlertDialog mDialog;
 
 	private final void reboot() {
+
+		//Micronet
+		String fnrk = "/runningkernel";
+		String fncf = "/data/misc/rb/continueflag";
+		String fnrf = "/data/misc/rb/recoveryflag";
+		
 		if (mGotaFile != null) {
 			mGotaThread = new Thread(new Runnable() {
 				public void run() {
@@ -68,6 +80,70 @@ public class RecoveryReboot extends DilActivity {
 
 			return;
 		}
+
+		//Micronet
+		//check that running kernel primary 
+		File f = new File(fncf);
+		if (f.exists()) {
+		    File cfc = new File(fncf);
+		    if (cfc.exists()) {
+		        File frk = new File(fnrk);
+		        if (frk.exists()) {
+		            String Runningkernel;
+		            try {
+		                BufferedReader reader = new BufferedReader(new FileReader(fnrk), 256);
+				try {
+		                    Runningkernel = reader.readLine();
+				} finally {
+				    reader.close();
+				}
+		            } catch (IOException e) {
+		                Log.e(LOG_TAG, "RecoveryReboot Exception reading running kernel file");
+		                return;
+		            }
+
+			    if (Runningkernel.equals("primary") != true) {
+			        Log.e(LOG_TAG, "RecoveryReboot Error: running [" + Runningkernel + "] or secondary kernel although continue flag exists");
+			        return; //If continue flag exists primary kernel must be the one loaded
+			    }
+		        } else {
+		            Log.e(LOG_TAG, "RecoveryReboot Error: no running kernel file");
+			    return;//No way of knowing which kenrel is running
+			}
+		    }
+		} else {
+		    Log.d(LOG_TAG, "RecoveryReboot: no continue flag - which running kernel not checked");
+		}
+		//About to reset and run recovery. Create the recovery flag.
+		File file = new File(fnrf);
+
+		try {
+		    file.createNewFile();
+		} catch(Exception e) {
+		    Log.e(LOG_TAG, "RecoveryReboot Error: failed to create recovery flag");
+		    return;
+		}
+		if(file.exists()) {
+		    try { 
+			OutputStream fo = new FileOutputStream(file);
+			fo.write(1);
+			fo.close();
+			Log.d(LOG_TAG, "RecoveryReboot: created recovery flag");
+		    } catch (Exception e) {
+			Log.e(LOG_TAG, "RecoveryReboot Error: failed to create output stream for recovery flag");
+			return;
+		    }
+		} else {
+		    Log.e(LOG_TAG, "RecoveryReboot Error: failed to create recovery flag - file doesn't exist");
+		    return;
+		}
+
+		//remove continue flag before reset
+		File fncfins = new File(fncf);
+		if (fncfins.exists()) {
+		    fncfins.delete();        	
+		}
+		//~Micronet		
 		
 		PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
 		try {

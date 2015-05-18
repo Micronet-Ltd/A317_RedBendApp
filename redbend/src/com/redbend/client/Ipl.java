@@ -81,7 +81,10 @@ public class Ipl
 	}
 	
 	public static String getDevModel() {
-		return Build.MODEL;
+		if (Build.MODEL == "A-317")
+			return "MCE 317";
+		else
+			return "MCE 307";
 	}
 	
 	public static String getManufacturer() {
@@ -95,17 +98,19 @@ public class Ipl
 	public static String getDeviceId(Context ctx) {
 		
 		/* Get the telephony manager */
-		TelephonyManager tm = (TelephonyManager) ctx.getSystemService(Context.TELEPHONY_SERVICE);
+		//RS TelephonyManager tm = (TelephonyManager) ctx.getSystemService(Context.TELEPHONY_SERVICE);
 		
 		//Get device IMEI
-		String deviceId = tm.getDeviceId();
+		//RS String deviceId = tm.getDeviceId();
+		String deviceId = Build.SERIAL;
 
 		// Tablet might not be able to get imei
-		if ( deviceId == null || deviceId.equals("") ) {
-			WifiManager manager = (WifiManager) ctx.getSystemService(Context.WIFI_SERVICE);
-			WifiInfo info = manager.getConnectionInfo();
-			if (info != null) deviceId = info.getMacAddress();
-		}
+		//RS
+		//if ( deviceId == null || deviceId.equals("") ) {
+		//	WifiManager manager = (WifiManager) ctx.getSystemService(Context.WIFI_SERVICE);
+		//	WifiInfo info = manager.getConnectionInfo();
+		//	if (info != null) deviceId = info.getMacAddress();
+		//}
 
 		Log.d(LOG_TAG,"DeviceId:" + deviceId);
 		return deviceId;
