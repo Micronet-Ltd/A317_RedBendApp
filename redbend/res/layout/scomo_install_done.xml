@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent">
+
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		android:orientation="vertical" android:layout_width="fill_parent"
+		android:layout_height="fill_parent">
+
+		<TextView android:id="@+id/ScomoInstallDoneText" 
+			android:layout_width="fill_parent" 
+			android:layout_height="fill_parent"
+			style="@style/TextViewStyle.PaddingLeft"/> 
+	</LinearLayout>
+	
+	<LinearLayout android:id="@+id/InnerLinearLayout"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true" android:orientation="vertical"
+		android:gravity="center_horizontal">
+		
+		<Button android:id="@+id/ConfirmButton" android:text="@string/ok"
+			android:layout_height="wrap_content" android:layout_width="fill_parent" />
+
+	</LinearLayout>
+</RelativeLayout>
