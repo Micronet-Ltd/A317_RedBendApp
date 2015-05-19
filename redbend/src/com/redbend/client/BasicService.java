@@ -133,6 +133,9 @@ public class BasicService extends EventIntentService
 				// Get device Manufacturer
 				String manufacturer = Ipl.getManufacturer();
 				
+				Log.d(LOG_TAG,"deviceId: " + deviceId + "userAgent: " + userAgent + 
+						"deviceModel: " + deviceModel + "manufacturer: " + manufacturer);
+				
 				//Start the SMM
 				startSmm(deviceId, userAgent, deviceModel, manufacturer);             
 			}}, START_SMM_DELAY_MSEC);

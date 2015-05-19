@@ -81,10 +81,20 @@ public class Ipl
 	}
 	
 	public static String getDevModel() {
-		if (Build.MODEL == "A-317")
-			return "MCE 317";
+		String ret = "MCE 307";
+		
+		Log.w(LOG_TAG, "Build.MODEL = " + Build.MODEL);
+
+		if (Build.MODEL.equals("A-317"))
+			ret = "MCE 317";
+		else if (Build.MODEL.equals("A-307I"))
+			ret = "MCE 307I";
 		else
-			return "MCE 307";
+			ret = "MCE 307";
+		
+		Log.w(LOG_TAG, "return = " + ret);
+		
+		return ret;
 	}
 	
 	public static String getManufacturer() {
