@@ -86,11 +86,11 @@ public class Ipl
 		Log.w(LOG_TAG, "Build.MODEL = " + Build.MODEL);
 
 		if (Build.MODEL.equals("A-317"))
-			ret = "MCE 317";
+			ret = "A-317";
 		else if (Build.MODEL.equals("A-307I"))
-			ret = "MCE 307I";
+			ret = "A-307I";
 		else
-			ret = "MCE 307";
+			ret = "A-307";
 		
 		Log.w(LOG_TAG, "return = " + ret);
 		
