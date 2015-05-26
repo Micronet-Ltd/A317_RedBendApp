@@ -90,7 +90,7 @@
         <get/><replace/>
         <type>text/plain</type>
         <format>int</format>
-        <value>60</value>
+        <value>1</value>
       </leaf>
       <leaf>
 	  	<name>PollingIntervalInHours</name>
