@@ -557,9 +557,9 @@
       <name>Mod</name>
       <get/>
       <format>chr</format>
-      <value>MCE 307</value>
-    </leaf>
-    <leaf>
+      <value></value>
+    </leaf>    
+     <leaf>
       <name>Man</name>
       <get/>
       <format>chr</format>
@@ -580,7 +580,7 @@
       <name>DevId</name>
       <get/>
       <format>chr</format>
-      <value>21000017</value>
+      <value></value>
     </leaf>
     <node>
       <name>Ext</name>

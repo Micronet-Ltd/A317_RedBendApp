@@ -56,7 +56,7 @@ public class BasicService extends EventIntentService
 	private AlarmManager m_alarmManager;
 
 	private native void ipcSendEvent(byte msg[]);
-	private native int initEngine(String filesDir);
+	private native int initEngine(String filesDir, String configFile);
 	private native void startSmm(String deviceId, String userAgent, String deviceModel, String deviceManufacturer);	
 	private native void destroyEngine();
 	private native void stopSmm();
@@ -199,7 +199,7 @@ public class BasicService extends EventIntentService
 		startService(new Intent(this, ClientService.class));
 
 		// initialize the engine	
-		m_initEngineResult = initEngine(fileDir.getAbsolutePath());
+		m_initEngineResult = initEngine(fileDir.getAbsolutePath(), null);
 		if (m_initEngineResult != 0) {
 			Log.e(LOG_TAG, "-onCreate::initEngine - 0x" + Integer.toHexString(m_initEngineResult) + 
 				" failed, return");

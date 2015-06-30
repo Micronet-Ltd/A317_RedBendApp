@@ -22,6 +22,7 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+#include <swm_general_errors.h>
 
 /**
  * Get device model.
@@ -57,6 +58,19 @@ SWM_Error VDM_SWMC_PL_Device_getManufacturer(UTF8CStr outMan, IU32* ioManSize);
  * \return	SWM_ERR_OK on success, or an \ref SWM_ERR_defs error code
  */
 SWM_Error VDM_SWMC_PL_Device_getFWVersion(UTF8CStr outFWVersion, IU32* ioFWVersionSize);
+
+/**
+ * Get device ID.
+ *
+ * \param	outId		Pre-allocated buffer to store device ID.
+ * \param	ioIdSize	Input: Length of \a outId.
+ *						Output: Length of device ID, excluding
+ *						null terminator.
+ * \param   context		General purpose context
+ * \return	SWM_ERR_OK on success, or an \ref SWM_ERR_defs error code
+ */
+SWM_Error VDM_SWMC_PL_Device_getId(UTF8CStr outId, IU32* ioIdSize, void* context);
+
 
 #ifdef __cplusplus
 } /* extern "C" */

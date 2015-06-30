@@ -24,7 +24,7 @@ extern "C" {
 #endif
 
 #ifndef VDM_SDK_VERSION
-#define VDM_SDK_VERSION "RedBend-vdm-5.7.0.69"
+#define VDM_SDK_VERSION "RedBend-vdm-5.7.0.70"
 #endif
 
 #ifdef __cplusplus

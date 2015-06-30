@@ -102,6 +102,7 @@ public class ConnectivityStateChangeReceiver extends SmmReceive {
 			data = mobileData;
 			break;
 		case ConnectivityManager.TYPE_WIFI:
+		case ConnectivityManager.TYPE_ETHERNET:
 			data = wifiState;
 			break;
 		default:

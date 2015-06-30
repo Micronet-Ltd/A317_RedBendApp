@@ -37,7 +37,7 @@
 #define VDM_COMPONENT_ID_E_VDM_COMPONENT_SWMC
 
 
-static SWM_Error VDM_SWMC_PL_Device_getOsBuildString(const char* inField, UTF8CStr outValue, IU32* ioValueSize)
+static SWM_Error VDM_SWMC_PL_Device_getOsBuildString(const char* inField, UTF8CStr outValue, IU32* ioValueSize, void *context)
 {
 	SWM_Error swmResult = SWM_ERR_OK;
 	VDM_Error vdmResult = VDM_ERR_OK;
@@ -47,6 +47,7 @@ static SWM_Error VDM_SWMC_PL_Device_getOsBuildString(const char* inField, UTF8CS
 	jstring valueObj = NULL;
 	jint valueLen = 0;
 	IU32 suppliedLen = 0;
+	jobject service_obj = context;
 
 	if (ioValueSize)
 		VDM_logDebug(("+VDM_SWMC_PL_Device_getOsBuildStringNew. inField=%s, ioValueSize:%d",
@@ -67,8 +68,11 @@ static SWM_Error VDM_SWMC_PL_Device_getOsBuildString(const char* inField, UTF8CS
 		vdmResult = VDM_ERR_UNSPECIFIC;
 		goto end;
 	}
+	if (!context)
+		methodId = (*env)->GetStaticMethodID(env, iplClass, (const char*)inField, "()Ljava/lang/String;");
+	else
+		methodId = (*env)->GetStaticMethodID(env, iplClass, (const char*)inField, "(Landroid/content/Context;)Ljava/lang/String;");
 
-	methodId = (*env)->GetStaticMethodID(env, iplClass, (const char*)inField, "()Ljava/lang/String;");
 	vdmResult = JNU_handleException(env);
 	if(vdmResult != VDM_ERR_OK || !methodId)
 	{
@@ -77,7 +81,11 @@ static SWM_Error VDM_SWMC_PL_Device_getOsBuildString(const char* inField, UTF8CS
 			vdmResult = VDM_ERR_UNSPECIFIC;
 		goto end;
 	}
-	valueObj = (*env)->CallStaticObjectMethod ( env, iplClass, methodId, NULL ) ;
+	if (!context)
+		valueObj = (*env)->CallStaticObjectMethod ( env, iplClass, methodId, NULL ) ;
+	else
+		valueObj = (*env)->CallStaticObjectMethod ( env, iplClass, methodId, service_obj ) ;
+
 	vdmResult = JNU_handleException(env);
 	if(vdmResult != VDM_ERR_OK)
 	{
@@ -139,22 +147,32 @@ end:
 
 SWM_Error VDM_SWMC_PL_Device_getManufacturer(UTF8CStr outMan, IU32* ioManSize)
 {
-	SWM_Error res = VDM_SWMC_PL_Device_getOsBuildString("getManufacturer", outMan, ioManSize);
+	SWM_Error res = VDM_SWMC_PL_Device_getOsBuildString("getManufacturer", outMan, ioManSize, NULL);
 	VDM_logDebug(("VDM_SWMC_PL_Device_getManufacturer: [%s]", VDM_UTL_strPrintNull(outMan)));
 	return res;
 }
 
 SWM_Error VDM_SWMC_PL_Device_getFWVersion(UTF8CStr outFWVersion, IU32* ioFWVersionSize)
 {
-	SWM_Error res = VDM_SWMC_PL_Device_getOsBuildString("getFwVersion", outFWVersion, ioFWVersionSize);
+	SWM_Error res = VDM_SWMC_PL_Device_getOsBuildString("getFwVersion", outFWVersion, ioFWVersionSize, NULL);
 	VDM_logDebug(("VDM_SWMC_PL_Device_getFWVersion: [%s]", VDM_UTL_strPrintNull(outFWVersion)));
 	return res;
 }
 
 SWM_Error VDM_SWMC_PL_Device_getModel(UTF8CStr outModel, IU32* ioModelSize)
 {
-	SWM_Error res = VDM_SWMC_PL_Device_getOsBuildString("getDevModel", outModel, ioModelSize);
-	VDM_logDebug(("VDM_SWMC_PL_Device_getModelNew: [%s]", VDM_UTL_strPrintNull(outModel)));
+	SWM_Error res = VDM_SWMC_PL_Device_getOsBuildString("getDevModel", outModel, ioModelSize, NULL);
+	VDM_logDebug(("VDM_SWMC_PL_Device_getModel: [%s]", VDM_UTL_strPrintNull(outModel)));
 	return res;
 }
+
+SWM_Error VDM_SWMC_PL_Device_getId(UTF8CStr outId, IU32* ioIdSize, void* context)
+{
+	SWM_Error res = VDM_SWMC_PL_Device_getOsBuildString("getDeviceId", outId, ioIdSize, context);
+	VDM_logDebug(("VDM_SWMC_PL_Device_getId: [%s]", VDM_UTL_strPrintNull(outId)));
+	return res;
+}
+
+
+
 

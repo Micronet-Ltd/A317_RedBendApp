@@ -23,13 +23,13 @@ import com.redbend.app.SmmReceive;
 public class DeviceUpdateReceiver extends SmmReceive {
 	
 	public static final String INTENT_PREFIX = "SwmClient.";
-	private String ENABLE_PERIODIC_CHECK_FOR_UPDATES = INTENT_PREFIX + "ENABLE_PERIODIC_CHECK_FOR_UPDATES";
-	private String DISABLE_PERIODIC_CHECK_FOR_UPDATES = INTENT_PREFIX + "DISABLE_PERIODIC_CHECK_FOR_UPDATES";
-	private String CHANGE_PERIODIC_CHECK_FOR_UPDATES = INTENT_PREFIX + "CHANGE_PERIODIC_CHECK_FOR_UPDATES";
-	private String CHECK_FOR_UPDATES_NOW = INTENT_PREFIX + "CHECK_FOR_UPDATES_NOW";
-	private String START_APPLICATION = INTENT_PREFIX + "START_APPLICATION";
-	private String KEY_INTERVAL = "interval";
-	private int INVALID_VALUE = -1;
+	private static final String ENABLE_PERIODIC_CHECK_FOR_UPDATES = INTENT_PREFIX + "ENABLE_PERIODIC_CHECK_FOR_UPDATES";
+	private static final String DISABLE_PERIODIC_CHECK_FOR_UPDATES = INTENT_PREFIX + "DISABLE_PERIODIC_CHECK_FOR_UPDATES";
+	private static final String CHANGE_PERIODIC_CHECK_FOR_UPDATES = INTENT_PREFIX + "CHANGE_PERIODIC_CHECK_FOR_UPDATES";
+	public static final String CHECK_FOR_UPDATES_NOW = INTENT_PREFIX + "CHECK_FOR_UPDATES_NOW";
+	private static final String START_APPLICATION = INTENT_PREFIX + "START_APPLICATION";
+	private static final String KEY_INTERVAL = "interval";
+	private static final int INVALID_VALUE = -1;
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		String action = intent.getAction();

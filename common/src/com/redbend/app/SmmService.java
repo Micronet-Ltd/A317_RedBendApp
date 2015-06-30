@@ -311,7 +311,7 @@ abstract public class SmmService extends Service implements EventHandlerContext 
 		Log.d(LOG_TAG, "Component to send to from Pkg " + getPackageName() + " to pkg "+ pkgName + " class " + className);
 		String fullClassName = new String (pkgName + "." + className);
 		Log.d(LOG_TAG, "FullClassName is: " + fullClassName);
-		m_sendToComponentName = new ComponentName(pkgName, fullClassName);
+		m_sendToComponentName = new ComponentName(getPackageName(), fullClassName);
 		Log.d(LOG_TAG, "ComponentName is " + m_sendToComponentName.toString());
 	}
 
@@ -326,7 +326,7 @@ abstract public class SmmService extends Service implements EventHandlerContext 
 	{
 		Log.d(LOG_TAG, "SmmService Transmitting event: " + ev.getName());
 		Intent intent = ev.createIntent();
-		
+		Log.d(LOG_TAG, "starting service: " + m_sendToComponentName.toString());
 		intent.setComponent(m_sendToComponentName);
 		startService(intent);
 	}

@@ -81,20 +81,21 @@ public class Ipl
 	}
 	
 	public static String getDevModel() {
-		String ret = "MCE 307";
+//		String ret = "A-307";
 		
 		Log.w(LOG_TAG, "Build.MODEL = " + Build.MODEL);
 
-		if (Build.MODEL.equals("A-317"))
-			ret = "A-317";
-		else if (Build.MODEL.equals("A-307I"))
-			ret = "A-307I";
-		else
-			ret = "A-307";
+//		if (Build.MODEL.equals("A-317"))
+//			ret = "A-317";
+//		else if (Build.MODEL.equals("A-307I"))
+//			ret = "A-307I";
+//		else
+//			ret = "A-307";
 		
-		Log.w(LOG_TAG, "return = " + ret);
+//		Log.w(LOG_TAG, "return = " + ret);
 		
-		return ret;
+//		return ret;
+		return Build.MODEL;
 	}
 	
 	public static String getManufacturer() {

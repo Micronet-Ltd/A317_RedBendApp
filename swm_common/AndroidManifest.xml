@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="com.redbend.swm_common"
       android:versionCode="1"
-      android:versionName="5.7.0.69">
+      android:versionName="5.7.0.70">
 
 	  <uses-sdk android:minSdkVersion="14" />
 </manifest> 
