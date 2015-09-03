@@ -12,6 +12,7 @@ package com.redbend.swm_common.ui;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+
 import android.Manifest;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -106,6 +107,7 @@ public abstract class AdminUiBase extends DilActivity {
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	private static boolean isDeviceProvisioned(Context ctx) {
 		return Settings.Secure.getInt(ctx.getContentResolver(),
 			Settings.Secure.DEVICE_PROVISIONED, 0) > 0;

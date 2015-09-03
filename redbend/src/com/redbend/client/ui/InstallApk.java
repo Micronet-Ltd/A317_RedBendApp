@@ -12,8 +12,14 @@ package com.redbend.client.ui;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.Reader;
+import java.util.StringTokenizer;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.File;
 
 import android.Manifest;
 import android.app.ProgressDialog;
@@ -227,6 +233,7 @@ public class InstallApk extends DilActivity {
 		return res;
 	}
 
+	@SuppressWarnings("deprecation")
 	private boolean canInstallNonMarketApps() {
 		boolean unknownSource = false;
 		if (Build.VERSION.SDK_INT < 3) {
@@ -258,6 +265,107 @@ public class InstallApk extends DilActivity {
 		sendEvent(new Event(event).addVar(new EventVar(varName, ret)));
 		mResultAlreadySent = true;
 	}
+	
+	private void copyConfigurationfile ( String copyFileName ) {
+		Log.i (LOG_TAG, "The Found file: " + copyFileName);
+		String FileName = "";
+		String DirName = "/";
+		
+		InputStream in = null;
+	    OutputStream out = null;
+	    File dir = null;
+		
+		//String prefix = "File_";
+		String prefix = "/data/data/com.redbend.client/files/temp_folder/File_";
+		String noPrefixStr = copyFileName.substring(copyFileName.indexOf(prefix) + prefix.length());
+		Log.i (LOG_TAG, "The noPrefixStr: " + noPrefixStr);
+
+		//String[] tokens = noPrefixStr.split(";");
+
+		//for (String t : tokens)
+		//	DirName = DirName + "/" + t;
+		
+		try {
+			StringTokenizer tokens = new StringTokenizer ( noPrefixStr, ";" );
+			if (null != tokens){
+				int elementNum = tokens.countTokens();
+				Log.i (LOG_TAG, "The found elementsNum: " + elementNum);
+				if ( 2 >= elementNum ) {
+					Log.e (LOG_TAG, "The Configuration name wrong !!!!!" + copyFileName);
+					sendResult(false, 0);
+					return;
+				}
+				
+				for (int i = 0; i < elementNum; i++)
+				{
+					if ( i < (elementNum - 1))
+						DirName = DirName + "/" + tokens.nextToken();
+					else {
+						FileName = tokens.nextToken();
+						//DirName = DirName + "/";
+					}
+				}
+				
+				Log.i (LOG_TAG, "The found file name  " + FileName);
+				FileName = FileName.replace(".apk", "");
+				Log.i (LOG_TAG, "The found file name correction  " + FileName);
+				Log.i (LOG_TAG, "The found Dir name  " + DirName);
+				
+				//Start copy procedure
+				
+				//Check if directory exist 
+				//and if not create new
+				dir = new File (DirName);
+				if (null != dir){
+			        if (!dir.exists())
+			        {
+			            dir.mkdirs();
+			        }
+				} else {
+					Log.e (LOG_TAG, "Error open or create folder !!!!!" + DirName);
+					sendResult(false, 0);
+					return;
+				}
+				
+				in = new FileInputStream(copyFileName);        
+		        out = new FileOutputStream(DirName + "/" + FileName);
+	
+		        Log.i (LOG_TAG, "Start Copy");
+		        byte[] buffer = new byte[1024];
+		        int read;
+		        while ((read = in.read(buffer)) != -1) {
+		            out.write(buffer, 0, read);
+		        }
+	
+		        //finish copy
+		        out.flush();
+		        
+		        Log.i (LOG_TAG, "Finish Copy");
+		        
+		        //delete file from update directory
+		        //new File(copyFileName).delete();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (null != in)
+					in.close();
+				sendResult(true, 0);
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+			try {
+				if (null != out)
+					out.close();
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
+		return;
+	}
 
 	private class ProcessEvent implements Runnable {
 
@@ -276,12 +384,20 @@ public class InstallApk extends DilActivity {
 
 		public void run() {
 			final String eventName = mEvent.getName();
+			
+			Log.i (LOG_TAG, "The event name: " + eventName);
 
 			if (INSTALL_EVENT.equals(eventName)) {
 				String apkFile = new String(
 						mEvent.getVarStrValue("DMA_VAR_SCOMO_COMP_FILE"));
+				
+				Log.i (LOG_TAG, "The apkFile name: " + apkFile);
 
-				if (isInstallPermissionGranted()) {
+				//Micronet changes
+				if (apkFile.contains("File_")){
+					copyConfigurationfile ( apkFile );
+					//~Micronet changes
+				} else if (isInstallPermissionGranted()) {
 					sendResult(true, installRoot(apkFile, false));
 				} else {
 					boolean needRegister;
