@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<bool name="isAutomotive">false</bool>
+<bool name="isGenericInstallerSimEnabled">false</bool>
+<bool name="isTRUEProduct">false</bool>
+<bool name="buildRbAnalytics">false</bool>
+<bool name="enforceEventVarsValidation">false</bool>
+<bool name="isJsystem">false</bool>
+</resources>

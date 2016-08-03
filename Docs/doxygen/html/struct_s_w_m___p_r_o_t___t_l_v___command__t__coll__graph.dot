@@ -1,0 +1,13 @@
+digraph "SWM_PROT_TLV_Command_t"
+{
+  bgcolor="transparent";
+  edge [fontname="FreeSans",fontsize="10",labelfontname="FreeSans",labelfontsize="10"];
+  node [fontname="FreeSans",fontsize="10",shape=record];
+  Node1 [label="SWM_PROT_TLV_Command_t",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node2 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" comp_id\nstr" ,fontname="FreeSans"];
+  Node2 [label="SWM_PROT_TLV_Str_t",height=0.2,width=0.4,color="black",URL="$struct_s_w_m___p_r_o_t___t_l_v___str__t.html"];
+  Node3 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" num" ,fontname="FreeSans"];
+  Node3 [label="SWM_PROT_TLV_Number_t",height=0.2,width=0.4,color="black",URL="$struct_s_w_m___p_r_o_t___t_l_v___number__t.html"];
+  Node4 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" bin" ,fontname="FreeSans"];
+  Node4 [label="SWM_PROT_TLV_Data_t",height=0.2,width=0.4,color="black",URL="$struct_s_w_m___p_r_o_t___t_l_v___data__t.html"];
+}

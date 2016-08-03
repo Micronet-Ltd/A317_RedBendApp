@@ -1,0 +1,28 @@
+var vdm__ipc_8h =
+[
+    [ "VDM_IPC_Instance_t", "struct_v_d_m___i_p_c___instance__t.html", "struct_v_d_m___i_p_c___instance__t" ],
+    [ "VDM_IPC_INSTANCE_MAX_FDS", "vdm__ipc_8h.html#ade3fba9d2be3c89bde1ae5e940d01edb", null ],
+    [ "VDM_IPC_MSG_SIZE", "vdm__ipc_8h.html#a3bcaa25c77f6587cbb7be7177e72ae6f", null ],
+    [ "VDM_SMM_SIGNATURE_MAX_SIZE_BYTES", "vdm__ipc_8h.html#a09ab92f80d55beb839dc2d15bd253a83", null ],
+    [ "VDM_IPC_calculateSignatureCB_t", "vdm__ipc_8h.html#ae1ae65b5c215fa205a802c8b196d9b9e", null ],
+    [ "VDM_IPC_filterEventCB_t", "vdm__ipc_8h.html#a8f47eadc0746bfbf6e547c7813566be0", null ],
+    [ "VDM_IPC_clientPostEvent", "vdm__ipc_8h.html#aafad101c6af1c8dddff535dcc4132670", null ],
+    [ "VDM_IPC_clientReadUiEvent", "vdm__ipc_8h.html#a81f4c6fe488fb88425dac4abf3fa3571", null ],
+    [ "VDM_IPC_clientSelect", "vdm__ipc_8h.html#a69c82fdda3c2c0af26467bfdedd4ae6b", null ],
+    [ "VDM_IPC_createAuthenticationContext", "vdm__ipc_8h.html#a3344930338e7efe30d55b978ab40ce80", null ],
+    [ "VDM_IPC_genEvent", "vdm__ipc_8h.html#abf78ac7cab39e972328bce59993dd53a", null ],
+    [ "VDM_IPC_getNumberOfClients", "vdm__ipc_8h.html#ab3d8762eb8bf597efbdf7b763c97bd2f", null ],
+    [ "VDM_IPC_initTcpClient", "vdm__ipc_8h.html#ad5063acf68bf8e15a15aecdf7866cab1", null ],
+    [ "VDM_IPC_initTcpServer", "vdm__ipc_8h.html#ac37482ca6f78bbe4421bf3feb17079fb", null ],
+    [ "VDM_IPC_initUnixClient", "vdm__ipc_8h.html#a03c1e6c4b1ad2821f61816504fbeb1c5", null ],
+    [ "VDM_IPC_initUnixServer", "vdm__ipc_8h.html#a563968f4ae76b7104ff8384240934af9", null ],
+    [ "VDM_IPC_parseEvent", "vdm__ipc_8h.html#a347e7988a2d6288aedb3a1ca8bc7c9e8", null ],
+    [ "VDM_IPC_registerEventFilterFunc", "vdm__ipc_8h.html#a3599919fc4a79890541b755b3e45f967", null ],
+    [ "VDM_IPC_registerSignatureCalcFunc", "vdm__ipc_8h.html#ae629248067cb638fed6f9adf590d70ad", null ],
+    [ "VDM_IPC_serverPostUiEvent", "vdm__ipc_8h.html#a19b13c2de416c51dcc8d2910629be9dd", null ],
+    [ "VDM_IPC_serverReadEvent", "vdm__ipc_8h.html#a2fbdbbd52f995577c5cb71139e3b393b", null ],
+    [ "VDM_IPC_serverSelect", "vdm__ipc_8h.html#aada8daaabc222433b16e96131fdf86ab", null ],
+    [ "VDM_IPC_serverStopRead", "vdm__ipc_8h.html#a4e064a40c9e337165b207793acdfbb94", null ],
+    [ "VDM_IPC_termClient", "vdm__ipc_8h.html#a5673294091feca58b4315b19f44f6f69", null ],
+    [ "VDM_IPC_termServer", "vdm__ipc_8h.html#aa8fbc718e6f6863c9f743ffa8b2766e9", null ]
+];
