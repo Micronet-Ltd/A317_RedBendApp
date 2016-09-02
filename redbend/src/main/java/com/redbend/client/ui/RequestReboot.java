@@ -34,6 +34,7 @@ import com.redbend.app.DilActivity;
 import com.redbend.app.Event;
 import com.redbend.client.ClientService;
 import com.redbend.client.ClientService.PRODUCT_TYPE;
+import com.redbend.client.micronet.MicronetReboot;
 
 /**
  * Display a reboot to recovery mode dialog box. Reboots automatically if a silent update.
@@ -101,7 +102,10 @@ public class RequestReboot extends DilActivity {
 
 			return;
 		}
-		
+
+		MicronetReboot.prepareRebootFlags();
+
+
 		PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
 		try {
 			pm.reboot("recovery");

@@ -77,15 +77,21 @@ public class DeviceUpdateReceiver extends SmmReceive {
 		else if ( action.equals(CHECK_FOR_UPDATES_NOW) ){		
 			Resources res = context.getResources();
 			Intent startupActivityIntent;
+
+
+
 			if (res.getBoolean(R.bool.isAutomotive))
 				startupActivityIntent = new Intent(context, StartupActivityAutomotive.class);
 			else
 				startupActivityIntent = new Intent(context, StartupActivity.class);
+
 			startupActivityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			startupActivityIntent.addFlags(Intent.FLAG_ACTIVITY_NO_USER_ACTION);
 			context.startActivity(startupActivityIntent);
 			return;
 		}
+
+
 		if (event != null)
 			sendEvent(context, ClientService.class,event);
 	}

@@ -3,7 +3,12 @@
  //
  // MicronetDevice
  //
- // Functionality to get information about indentifying the device
+ // Functionality to identify the device (get the Device ID) that is used in communication with the server
+
+
+ // Changes Required to Client:
+ //     call this function from Ipl.java file
+
  ******************************************************************************/
 /**
  * Created by dschmidt on 8/5/16.

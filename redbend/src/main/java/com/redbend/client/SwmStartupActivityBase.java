@@ -40,27 +40,37 @@ public abstract class SwmStartupActivityBase extends Activity {
     protected abstract void userAcceptedPermission();
     protected abstract void userDeclinedPermission();
 
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (!isPrimaryUser())
+        if (!amIPrimaryUser())
         {
+            Log.d(LOG_TAG, " Not primary user -- returning");
             String text = getString(R.string.not_primary_user);
             Log.d(LOG_TAG, text);
             Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG).show();
             finish();
         }
 
-        DevicePolicyManager dPM = (DevicePolicyManager)getSystemService(Context.DEVICE_POLICY_SERVICE);
-        ComponentName adminName = new ComponentName(this, DmcDeviceAdminReceiver.class);		
 
-        if(AdminUiBase.isAdmin(this, dPM)){
+
+        if (amIAdmin()) {
             sendStartServiceEvent();
             finish();
-        }else{  
-            AdminUiBase.startAdminPermissionActivity(this, adminName);
+        } else {
+            if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.JELLY_BEAN) {
+                Log.d(LOG_TAG, " Starting Activity to add Admin");
+                ComponentName adminName = new ComponentName(this, DmcDeviceAdminReceiver.class);
+                AdminUiBase.startAdminPermissionActivity(this, adminName);
+            } else {
+                Log.d(LOG_TAG, " Skipping Activity to add Admin");
+            }
         }
+
     }
 
     @Override
@@ -79,7 +89,7 @@ public abstract class SwmStartupActivityBase extends Activity {
         Log.d(LOG_TAG, "-onActivityResult");
     }
     
-    private boolean isPrimaryUser() {
+    private boolean amIPrimaryUser() {
         if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.JELLY_BEAN) {
             UserHandle uh = Process.myUserHandle();
             Context context = getApplicationContext();
@@ -91,7 +101,28 @@ public abstract class SwmStartupActivityBase extends Activity {
             }
             return true;
         } else {
+            Log.d(LOG_TAG, "SDK Build version " + Build.VERSION.SDK_INT + " is always primary user");
             return true; // always assume we are primary user
         }
-    }
+    } // amIPrimaryUser()
+
+    private boolean amIAdmin() {
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+            Log.d(LOG_TAG, "SDK Build version " + Build.VERSION.SDK_INT + " is always admin");
+            return true;
+        }
+
+        Log.d(LOG_TAG, "Checking for Admin");
+
+        DevicePolicyManager dPM = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
+
+        if (AdminUiBase.isAdmin(this, dPM)) {
+            return true;
+        }
+
+        Log.d(LOG_TAG, "Not an admin");
+        return false;
+    } // amIAdmin()
+
 }

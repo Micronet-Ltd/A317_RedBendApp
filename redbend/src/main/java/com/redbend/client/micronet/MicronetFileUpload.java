@@ -4,6 +4,12 @@
 // MicronetFileUpload
 //
 // Functionality to allow uploading a file to a specific location (instead of installing an APK)
+
+
+ // Changes Required to Client:
+ //     call these functions from InstallApk.java
+
+
 ******************************************************************************/
 
 /**
@@ -32,10 +38,10 @@ public class MicronetFileUpload {
     //  checks if the operation is a copy-file operation (instead of an install apk operation)
     //      true if this should be treated like a file-copy operation, false if it should not.
     /////////////////////////////////////////////////////////////////////////////////
-    private boolean checkIsCopyFile( String apkFileName ) {
+    public static boolean checkIsCopyFile( String apkFileName ) {
 
         if (apkFileName.contains("File_")) {
-            // if the apk name starts with "File_", then this is not an apk. Instead, the file should be copied to specified location.
+            // if the apk file name starts with "File_" (not counting path), then this is not an apk. Instead, the file should be copied to specified location.
             return true;
         }
         return false;
@@ -45,12 +51,12 @@ public class MicronetFileUpload {
     /////////////////////////////////////////////////////////////////////////////////
     // copyFile()
     //  copies the given file to the specified location (used instead of installing an apk)
+    //  called from InstallApk class if the "installation" is really a file copy
     // Returns:
     //      true if file was copied, false if it was not.
-    //      this result should eventually be passed to sendResult, as in "sendResult(true, 0);" or "sendResult(false, 0);"
     /////////////////////////////////////////////////////////////////////////////////
-    private boolean copyFile( String copyFileName ) {
-        Log.i (LOG_TAG, "The Found file: " + copyFileName);
+    public static boolean copyFile( String copyFileName ) {
+        Log.i (LOG_TAG, "Copying File instead of installing: " + copyFileName);
         String FileName = "";
         String DirName = "/";
 
@@ -148,8 +154,7 @@ public class MicronetFileUpload {
 
 
         return result;
-    } // copyConfigurationfile()
-
+    } // copyFile()
 
 
 

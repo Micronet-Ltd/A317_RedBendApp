@@ -48,6 +48,8 @@ import android.bluetooth.BluetoothAdapter;
 
 import com.redbend.android.RbException.VdmError;
 import com.redbend.app.*;
+import com.redbend.client.micronet.MicronetAppBroadcaster;
+import com.redbend.client.micronet.MicronetConfirmHandler;
 import com.redbend.client.ui.*;
 import com.redbend.client.uialerts.*;
 import com.redbend.client.R;
@@ -108,6 +110,8 @@ public class ClientService extends SmmService
             version = "unknown";
         }
         Log.d(LOG_TAG, " **** Red Bend Software Client Version: " + version + " ****");
+
+        MicronetAppBroadcaster.sendStartingBroadcast(this);
     }
 
     private void sendProductTypeEvent(){
@@ -373,15 +377,15 @@ public class ClientService extends SmmService
         UI_MODE_FOREGROUND,	
         new EventHandlerIntent(this, Html5Container.class));
 
-        registerHandler(1, new Event("DMA_MSG_SCOMO_DL_CONFIRM_UI").addVar(new EventVar("DMA_VAR_SCOMO_ISSILENT", 0)),
-                UI_MODE_BOTH_FG_AND_BG, 
-                new EventHandlerIntent(this, Html5Container.class));
+//        registerHandler(1, new Event("DMA_MSG_SCOMO_DL_CONFIRM_UI").addVar(new EventVar("DMA_VAR_SCOMO_ISSILENT", 0)),
+//                UI_MODE_BOTH_FG_AND_BG,
+//                new EventHandlerIntent(this, Html5Container.class));
 
         //In case user initiated and in silent - show error message "in progress"
-        registerHandler(1, new Event("DMA_MSG_SCOMO_DL_CONFIRM_UI")
-        .addVar(new EventVar("DMA_VAR_SCOMO_TRIGGER_MODE", SmmConstants.SCOMO_MODE_USER))
-        .addVar(new EventVar("DMA_VAR_SCOMO_ISSILENT", 1)),	UI_MODE_FOREGROUND, 
-        new EventHandlerIntent(this, Html5Container.class));
+//        registerHandler(1, new Event("DMA_MSG_SCOMO_DL_CONFIRM_UI")
+//        .addVar(new EventVar("DMA_VAR_SCOMO_TRIGGER_MODE", SmmConstants.SCOMO_MODE_USER))
+//        .addVar(new EventVar("DMA_VAR_SCOMO_ISSILENT", 1)),	UI_MODE_FOREGROUND,
+//        new EventHandlerIntent(this, Html5Container.class));
 
         // user initiated application launching 
         registerHandler(1, new Event("DMA_MSG_USER_SESSION_TRIGGERED"),
@@ -405,18 +409,18 @@ public class ClientService extends SmmService
         //**************Event DMA_MSG_SCOMO_INS_CONFIRM_UI start********************
 
         // Non-silent, critical, background or foreground, initiated by user, server, device. 
-        registerHandler(1, new Event("DMA_MSG_SCOMO_INS_CONFIRM_UI")
-        .addVar(new EventVar("DMA_VAR_SCOMO_ISSILENT", 0))
-        .addVar(new EventVar("DMA_VAR_SCOMO_CRITICAL", 1)),
-        UI_MODE_BOTH_FG_AND_BG, 
-        new EventHandlerIntent(this, Html5Container.class));
-
-        // Non-silent, Non-critical, foreground, initiated by user, device, server. 
-        registerHandler(1, new Event("DMA_MSG_SCOMO_INS_CONFIRM_UI")
-        .addVar(new EventVar("DMA_VAR_SCOMO_ISSILENT", 0))
-        .addVar(new EventVar("DMA_VAR_SCOMO_CRITICAL", 0)),
-        UI_MODE_FOREGROUND, 
-        new EventHandlerIntent(this, Html5Container.class));
+//        registerHandler(1, new Event("DMA_MSG_SCOMO_INS_CONFIRM_UI")
+//        .addVar(new EventVar("DMA_VAR_SCOMO_ISSILENT", 0))
+//        .addVar(new EventVar("DMA_VAR_SCOMO_CRITICAL", 1)),
+//        UI_MODE_BOTH_FG_AND_BG,
+//        new EventHandlerIntent(this, Html5Container.class));
+//
+//        // Non-silent, Non-critical, foreground, initiated by user, device, server.
+//        registerHandler(1, new Event("DMA_MSG_SCOMO_INS_CONFIRM_UI")
+//        .addVar(new EventVar("DMA_VAR_SCOMO_ISSILENT", 0))
+//        .addVar(new EventVar("DMA_VAR_SCOMO_CRITICAL", 0)),
+//        UI_MODE_FOREGROUND,
+//        new EventHandlerIntent(this, Html5Container.class));
 
         //**************Event DMA_MSG_SCOMO_INS_CONFIRM_UI end********************
 
@@ -535,98 +539,98 @@ public class ClientService extends SmmService
                 UI_MODE_FOREGROUND,
                 new EventHandlerIntent(this, LawmoLockResult.class));
 
-        registerHandler(1, new Event("DMA_MSG_SCOMO_INS_CHARGE_BATTERY_UI").addVar(new EventVar("DMA_VAR_SCOMO_ISSILENT", 0)), 
-                UI_MODE_FOREGROUND,
-                new EventHandlerIntent(this, BatteryLow.class));
+//        registerHandler(1, new Event("DMA_MSG_SCOMO_INS_CHARGE_BATTERY_UI").addVar(new EventVar("DMA_VAR_SCOMO_ISSILENT", 0)),
+//                UI_MODE_FOREGROUND,
+//                new EventHandlerIntent(this, BatteryLow.class));
 
-        registerHandler(1, new Event("DMA_MSG_DL_INST_ERROR_UI"),
-                UI_MODE_FOREGROUND,
-                new EventHandlerIntent(this, ErrorHandler.class));
+//        registerHandler(1, new Event("DMA_MSG_DL_INST_ERROR_UI"),
+//                UI_MODE_FOREGROUND,
+//                new EventHandlerIntent(this, ErrorHandler.class));
+//
+//        registerHandler(1, new Event("DMA_MSG_DM_ERROR_UI"),
+//                UI_MODE_BOTH_FG_AND_BG,
+//                new EventHandlerIntent(this, ErrorHandler.class));
 
-        registerHandler(1, new Event("DMA_MSG_DM_ERROR_UI"),
-                UI_MODE_BOTH_FG_AND_BG,
-                new EventHandlerIntent(this, ErrorHandler.class));
+//        EventHandlerIntent scomoDlInterrupt = new EventHandlerIntent(this,
+//                ScomoDownloadInterrupted.class);
+//        //show scomo dl canceled as _screen_
+//        registerHandler(1, new Event("DMA_MSG_SCOMO_DL_CANCELED_UI"),
+//                UI_MODE_FOREGROUND,	scomoDlInterrupt );
 
-        EventHandlerIntent scomoDlInterrupt = new EventHandlerIntent(this, 
-                ScomoDownloadInterrupted.class);
-        //show scomo dl canceled as _screen_
-        registerHandler(1, new Event("DMA_MSG_SCOMO_DL_CANCELED_UI"),
-                UI_MODE_FOREGROUND,	scomoDlInterrupt );
+//        registerHandler(1, new Event("DMA_MSG_DNLD_FAILURE")
+//        .addVar(new EventVar("DMA_VAR_SCOMO_ISSILENT", 0))
+//        .addVar(new EventVar("DMA_VAR_DL_RETRY_COUNTER", 0)),
+//        UI_MODE_FOREGROUND,
+//        new EventHandlerIntent(this,
+//                ScomoDownloadInterrupted.class));
 
-        registerHandler(1, new Event("DMA_MSG_DNLD_FAILURE")
-        .addVar(new EventVar("DMA_VAR_SCOMO_ISSILENT", 0))
-        .addVar(new EventVar("DMA_VAR_DL_RETRY_COUNTER", 0)),
-        UI_MODE_FOREGROUND, 
-        new EventHandlerIntent(this, 
-                ScomoDownloadInterrupted.class));
+//        //show scomo dl failure as _screen_
+//        registerHandler(1, new Event("DMA_MSG_DNLD_FAILURE")
+//        .addVar(new EventVar("DMA_VAR_SCOMO_ISSILENT", 0))
+//        .addVar(new EventVar("DMA_VAR_USER_INIT", 1)),
+//        UI_MODE_FOREGROUND,
+//        new EventHandlerIntent(this,
+//                ScomoDownloadInterrupted.class));
+//
+//        registerHandler(1, new Event("DMA_MSG_DNLD_FAILURE")
+//        .addVar(new EventVar("DMA_VAR_SCOMO_ISSILENT", 0))
+//        .addVar(new EventVar("DMA_VAR_ERROR", VdmError.BAD_DD_INVALID_SIZE.val)),
+//        UI_MODE_FOREGROUND,
+//        new EventHandlerIntent(this, ScomoDownloadInterrupted.class));
 
-        //show scomo dl failure as _screen_
-        registerHandler(1, new Event("DMA_MSG_DNLD_FAILURE")
-        .addVar(new EventVar("DMA_VAR_SCOMO_ISSILENT", 0))
-        .addVar(new EventVar("DMA_VAR_USER_INIT", 1)),
-        UI_MODE_FOREGROUND,	
-        new EventHandlerIntent(this, 
-                ScomoDownloadInterrupted.class));
-
-        registerHandler(1, new Event("DMA_MSG_DNLD_FAILURE")
-        .addVar(new EventVar("DMA_VAR_SCOMO_ISSILENT", 0))
-        .addVar(new EventVar("DMA_VAR_ERROR", VdmError.BAD_DD_INVALID_SIZE.val)),
-        UI_MODE_FOREGROUND, 
-        new EventHandlerIntent(this, ScomoDownloadInterrupted.class));
-
-        registerHandler(1, new Event("DMA_MSG_SCOMO_DL_CONFIRM_UI").addVar(new EventVar("DMA_VAR_SCOMO_ISSILENT", 0)),
-                UI_MODE_BOTH_FG_AND_BG, 
-                new EventHandlerIntent(this, ScomoConfirm.class));
+//        registerHandler(1, new Event("DMA_MSG_SCOMO_DL_CONFIRM_UI").addVar(new EventVar("DMA_VAR_SCOMO_ISSILENT", 0)),
+//                UI_MODE_BOTH_FG_AND_BG,
+//                new EventHandlerIntent(this, ScomoConfirm.class));
 
         //In case user initiated and in silent - show error message "in progress"
-        registerHandler(1, new Event("DMA_MSG_SCOMO_DL_CONFIRM_UI")
-        .addVar(new EventVar("DMA_VAR_SCOMO_TRIGGER_MODE", SmmConstants.SCOMO_MODE_USER))
-        .addVar(new EventVar("DMA_VAR_SCOMO_ISSILENT", 1)),	UI_MODE_FOREGROUND, 
-        new EventHandlerIntent(this, ErrorHandler.class));
+//        registerHandler(1, new Event("DMA_MSG_SCOMO_DL_CONFIRM_UI")
+//        .addVar(new EventVar("DMA_VAR_SCOMO_TRIGGER_MODE", SmmConstants.SCOMO_MODE_USER))
+//        .addVar(new EventVar("DMA_VAR_SCOMO_ISSILENT", 1)),	UI_MODE_FOREGROUND,
+//        new EventHandlerIntent(this, ErrorHandler.class));
 
-        EventHandlerIntent checkUpdate =
-                new EventHandlerIntent(this, LoadingActivity.class);
-        // user initiated application launching 
-        registerHandler(1, new Event("DMA_MSG_USER_SESSION_TRIGGERED"),
-                UI_MODE_BOTH_FG_AND_BG, checkUpdate);
+//        EventHandlerIntent checkUpdate =
+//                new EventHandlerIntent(this, LoadingActivity.class);
+//        // user initiated application launching
+//        registerHandler(1, new Event("DMA_MSG_USER_SESSION_TRIGGERED"),
+//                UI_MODE_BOTH_FG_AND_BG, checkUpdate);
 
-        // Non-silent, background or foreground, initiated by user. 
-        EventHandlerIntent scomoInstallConfirmHandler =
-                new EventHandlerIntent(this, ScomoInstallConfirm.class);
+//        // Non-silent, background or foreground, initiated by user.
+//        EventHandlerIntent scomoInstallConfirmHandler =
+//                new EventHandlerIntent(this, ScomoInstallConfirm.class);
 
-        // Non-silent, critical, background or foreground, initiated by user, server, device. 
-        registerHandler(1, new Event("DMA_MSG_SCOMO_INS_CONFIRM_UI")
-        .addVar(new EventVar("DMA_VAR_SCOMO_ISSILENT", 0))
-        .addVar(new EventVar("DMA_VAR_SCOMO_CRITICAL", 1)),
-        UI_MODE_BOTH_FG_AND_BG, scomoInstallConfirmHandler);
+//        // Non-silent, critical, background or foreground, initiated by user, server, device.
+//        registerHandler(1, new Event("DMA_MSG_SCOMO_INS_CONFIRM_UI")
+//        .addVar(new EventVar("DMA_VAR_SCOMO_ISSILENT", 0))
+//        .addVar(new EventVar("DMA_VAR_SCOMO_CRITICAL", 1)),
+//        UI_MODE_BOTH_FG_AND_BG, scomoInstallConfirmHandler);
+//
+//        // Non-silent, Non-critical, foreground, initiated by user, device, server.
+//        registerHandler(1, new Event("DMA_MSG_SCOMO_INS_CONFIRM_UI")
+//        .addVar(new EventVar("DMA_VAR_SCOMO_ISSILENT", 0))
+//        .addVar(new EventVar("DMA_VAR_SCOMO_CRITICAL", 0)),
+//        UI_MODE_FOREGROUND, scomoInstallConfirmHandler);
 
-        // Non-silent, Non-critical, foreground, initiated by user, device, server. 
-        registerHandler(1, new Event("DMA_MSG_SCOMO_INS_CONFIRM_UI")
-        .addVar(new EventVar("DMA_VAR_SCOMO_ISSILENT", 0))
-        .addVar(new EventVar("DMA_VAR_SCOMO_CRITICAL", 0)),
-        UI_MODE_FOREGROUND, scomoInstallConfirmHandler);
-
-        registerHandler(1, new Event("DMA_MSG_SCOMO_INSTALL_PROGRESS_UI").addVar(new EventVar("DMA_VAR_SCOMO_ISSILENT", 0)),
-                UI_MODE_FOREGROUND,
-                new EventHandlerIntent(this, ScomoInstallProgress.class));		
+//        registerHandler(1, new Event("DMA_MSG_SCOMO_INSTALL_PROGRESS_UI").addVar(new EventVar("DMA_VAR_SCOMO_ISSILENT", 0)),
+//                UI_MODE_FOREGROUND,
+//                new EventHandlerIntent(this, ScomoInstallProgress.class));
 
         // show scomo installation-done as _screen_
-        registerHandler(1, new Event("DMA_MSG_SCOMO_INSTALL_DONE").addVar(new EventVar("DMA_VAR_SCOMO_ISSILENT", 0)),
-                UI_MODE_FOREGROUND,
-                new EventHandlerIntent(this, ScomoInstallDone.class));	
+//        registerHandler(1, new Event("DMA_MSG_SCOMO_INSTALL_DONE").addVar(new EventVar("DMA_VAR_SCOMO_ISSILENT", 0)),
+//                UI_MODE_FOREGROUND,
+//                new EventHandlerIntent(this, ScomoInstallDone.class));
 
-        registerHandler(1, new Event("DMA_MSG_SCOMO_DL_PROGRESS").addVar(new EventVar("DMA_VAR_SCOMO_ISSILENT", 0)),
-                UI_MODE_FOREGROUND,
-                new EventHandlerIntent(this, ScomoDownloadProgress.class));		
+//        registerHandler(1, new Event("DMA_MSG_SCOMO_DL_PROGRESS").addVar(new EventVar("DMA_VAR_SCOMO_ISSILENT", 0)),
+//                UI_MODE_FOREGROUND,
+//                new EventHandlerIntent(this, ScomoDownloadProgress.class));
 
-        registerHandler(1, new Event("DMA_MSG_SCOMO_REBOOT_CONFIRM_REQUEST"), 
-                UI_MODE_BOTH_FG_AND_BG,
-                new EventHandlerIntent(this, RequestRebootConfirm.class));
+//        registerHandler(1, new Event("DMA_MSG_SCOMO_REBOOT_CONFIRM_REQUEST"),
+//                UI_MODE_BOTH_FG_AND_BG,
+//                new EventHandlerIntent(this, RequestRebootConfirm.class));
 
-        // show scomo postpone-confirmation as _screen_
-        registerHandler(1, new Event("DMA_MSG_SCOMO_POSTPONE_STATUS_UI"),
-                UI_MODE_BOTH_FG_AND_BG,
-                new EventHandlerIntent(this, ScomoPostponeConfirm.class));		
+//        // show scomo postpone-confirmation as _screen_
+//        registerHandler(1, new Event("DMA_MSG_SCOMO_POSTPONE_STATUS_UI"),
+//                UI_MODE_BOTH_FG_AND_BG,
+//                new EventHandlerIntent(this, ScomoPostponeConfirm.class));
 
         // UI Alert registration for Android
         registerHandler(2, new Event("DMA_MSG_UI_ALERT"). 
@@ -645,13 +649,13 @@ public class ClientService extends SmmService
                 new EventHandlerIntent(this, InputUIAlert.class));
 
         // scomo user-initiated dl suspend
-        registerHandler(1, new Event("DMA_MSG_SCOMO_DL_SUSPEND_UI").addVar(new EventVar("DMA_VAR_SCOMO_ISSILENT", 0)),
-                UI_MODE_FOREGROUND, 
-                new EventHandlerIntent(this, ScomoDownloadSuspend.class));
-
-        registerHandler(1, new Event("DMA_MSG_SCOMO_DL_SUSPEND_UI_FROM_ICON").addVar(new EventVar("DMA_VAR_SCOMO_ISSILENT", 0)),
-                UI_MODE_BOTH_FG_AND_BG, 
-                new EventHandlerIntent(this, ScomoDownloadSuspend.class));
+//        registerHandler(1, new Event("DMA_MSG_SCOMO_DL_SUSPEND_UI").addVar(new EventVar("DMA_VAR_SCOMO_ISSILENT", 0)),
+//                UI_MODE_FOREGROUND,
+//                new EventHandlerIntent(this, ScomoDownloadSuspend.class));
+//
+//        registerHandler(1, new Event("DMA_MSG_SCOMO_DL_SUSPEND_UI_FROM_ICON").addVar(new EventVar("DMA_VAR_SCOMO_ISSILENT", 0)),
+//                UI_MODE_BOTH_FG_AND_BG,
+//                new EventHandlerIntent(this, ScomoDownloadSuspend.class));
     }
 
     private void eventHandlersRegister()
@@ -666,8 +670,8 @@ public class ClientService extends SmmService
         BatteryLowNotificationHandler requestChargeNotifyer = new BatteryLowNotificationHandler(this);
         VsenseServerAttributeChangeHandler attributeChangeHandler = new VsenseServerAttributeChangeHandler(this);
 
-        registerHandler(1, new Event("DMA_MSG_SCOMO_INS_CHARGE_BATTERY_UI").addVar(new EventVar("DMA_VAR_SCOMO_ISSILENT", 0)),
-                UI_MODE_BACKGROUND, requestChargeNotifyer);
+//        registerHandler(1, new Event("DMA_MSG_SCOMO_INS_CHARGE_BATTERY_UI").addVar(new EventVar("DMA_VAR_SCOMO_ISSILENT", 0)),
+//                UI_MODE_BACKGROUND, requestChargeNotifyer);
 
         registerHandler(1, new Event("DMA_MSG_DM_VSENSE_SERVER_ATTR"),
                 UI_MODE_BOTH_FG_AND_BG,
@@ -690,8 +694,8 @@ public class ClientService extends SmmService
                 attributeChangeHandler);
 
         //show scomo dl canceled as _notification_
-        registerHandler(1, new Event("DMA_MSG_SCOMO_DL_CANCELED_UI"),
-                UI_MODE_BACKGROUND, dlInterruptionNotifier);		
+//        registerHandler(1, new Event("DMA_MSG_SCOMO_DL_CANCELED_UI"),
+//                UI_MODE_BACKGROUND, dlInterruptionNotifier);
 
         /* Stop client service requested, this is not a BL event, it rather comes from BasicService */
         registerHandler(1, new Event(BasicService.STOP_CLIENT_EVENT),
@@ -705,20 +709,21 @@ public class ClientService extends SmmService
             }
         });
 
+
         // show scomo download notification
-        DownloadConfirmNotificationHandler dlSCOMONotifHandler = 
-                new DownloadConfirmNotificationHandler(this);
-        registerHandler(1, new Event("DMA_MSG_SCOMO_NOTIFY_DL_UI").addVar(new EventVar("DMA_VAR_SCOMO_ISSILENT", 0)),
-                UI_MODE_BACKGROUND, dlSCOMONotifHandler);
-        registerHandler(1, new Event("DMA_MSG_SCOMO_NOTIFY_DL_UI").addVar(new EventVar("DMA_VAR_SCOMO_ISSILENT", 1)),
-                UI_MODE_BACKGROUND,
-                new EventHandler(this) {
-            @Override
-            protected void genericHandler(Event ev) {
-                Log.d(LOG_TAG, "sending DMA_MSG_SCOMO_NOTIFY_DL from silent");
-                sendEvent(new Event("DMA_MSG_SCOMO_NOTIFY_DL"));
-            }
-        });
+//        DownloadConfirmNotificationHandler dlSCOMONotifHandler =
+//                new DownloadConfirmNotificationHandler(this);
+//        registerHandler(1, new Event("DMA_MSG_SCOMO_NOTIFY_DL_UI").addVar(new EventVar("DMA_VAR_SCOMO_ISSILENT", 0)),
+//                UI_MODE_BACKGROUND, dlSCOMONotifHandler);
+//        registerHandler(1, new Event("DMA_MSG_SCOMO_NOTIFY_DL_UI").addVar(new EventVar("DMA_VAR_SCOMO_ISSILENT", 1)),
+//                UI_MODE_BACKGROUND,
+//                new EventHandler(this) {
+//            @Override
+//            protected void genericHandler(Event ev) {
+//                Log.d(LOG_TAG, "sending DMA_MSG_SCOMO_NOTIFY_DL from silent");
+//                sendEvent(new Event("DMA_MSG_SCOMO_NOTIFY_DL"));
+//            }
+//        });
 
         // send broadcast event when DP is availble and installation end
         IntentBroadcaster intentBrodcaster = new IntentBroadcaster(this);
@@ -730,57 +735,57 @@ public class ClientService extends SmmService
         // send DMA_MSG_SCOMO_NOTIFY_DL back to the engine.
         // The flag UI_MODE_FOREGROUND in the registerHandler has no 
         // affect on event handlers, only on activities.
-        final int flowId = 1;
-        registerHandler(flowId, new Event("DMA_MSG_SCOMO_NOTIFY_DL_UI"),
-                UI_MODE_FOREGROUND,//no real affect when using genericHandler
-                new EventHandler(this) {
-            @Override
-            protected void genericHandler(Event ev) {
-                Log.d(LOG_TAG,
-                        "sending DMA_MSG_SCOMO_NOTIFY_DL from foreground");
-                if (isFlowInForeground(flowId))
-                    sendEvent(new Event("DMA_MSG_SCOMO_NOTIFY_DL"));
-            }
-        });
+//        final int flowId = 1;
+//        registerHandler(flowId, new Event("DMA_MSG_SCOMO_NOTIFY_DL_UI"),
+//                UI_MODE_FOREGROUND,//no real affect when using genericHandler
+//                new EventHandler(this) {
+//            @Override
+//            protected void genericHandler(Event ev) {
+//                Log.d(LOG_TAG,
+//                        "sending DMA_MSG_SCOMO_NOTIFY_DL from foreground");
+//                if (isFlowInForeground(flowId))
+//                    sendEvent(new Event("DMA_MSG_SCOMO_NOTIFY_DL"));
+//            }
+//        });
 
         registerHandler(1, new Event("DMA_MSG_SCOMO_FLOW_END_UI"),
                 UI_MODE_BOTH_FG_AND_BG,
                 intentBrodcaster);
 
-        registerHandler(1, new Event("DMA_MSG_DL_INST_ERROR_UI"),
-                UI_MODE_BACKGROUND, dlInterruptionNotifier);
+//        registerHandler(1, new Event("DMA_MSG_DL_INST_ERROR_UI"),
+//                UI_MODE_BACKGROUND, dlInterruptionNotifier);
 
         // show scomo installation-progress as _notification_
-        ProgressNotificationHandler installNotifHandler = 
-                new ProgressNotificationHandler(this);
+//        ProgressNotificationHandler installNotifHandler =
+//                new ProgressNotificationHandler(this);
 
-        registerHandler(1, new Event("DMA_MSG_SCOMO_INSTALL_PROGRESS_UI").addVar(new EventVar("DMA_VAR_SCOMO_ISSILENT", 0)),
-                UI_MODE_BACKGROUND, installNotifHandler);
+//        registerHandler(1, new Event("DMA_MSG_SCOMO_INSTALL_PROGRESS_UI").addVar(new EventVar("DMA_VAR_SCOMO_ISSILENT", 0)),
+//                UI_MODE_BACKGROUND, installNotifHandler);
 
         // show scomo installation-done as _notification_
-        InstallDoneNotificationHandler installDoneNotifHandler = 
-                new InstallDoneNotificationHandler(this);
-        registerHandler(1, new Event("DMA_MSG_SCOMO_INSTALL_DONE"),
-                UI_MODE_BACKGROUND, installDoneNotifHandler);
+//        InstallDoneNotificationHandler installDoneNotifHandler =
+//                new InstallDoneNotificationHandler(this);
+//        registerHandler(1, new Event("DMA_MSG_SCOMO_INSTALL_DONE"),
+//                UI_MODE_BACKGROUND, installDoneNotifHandler);
 
         // show scomo dl progress as _screen_
         registerHandler(1, new Event("DMA_MSG_SCOMO_DL_INIT"),
                 UI_MODE_FOREGROUND,
                 new StartDownload(this));
 
-        // show scomo dl progress as _notification_
-        ProgressNotificationHandler dlProgreessNotifyer = new ProgressNotificationHandler(this);		
-        registerHandler(1, new Event("DMA_MSG_SCOMO_DL_PROGRESS").addVar(new EventVar("DMA_VAR_SCOMO_ISSILENT", 0)),
-                UI_MODE_BACKGROUND, dlProgreessNotifyer);
+//        // show scomo dl progress as _notification_
+//        ProgressNotificationHandler dlProgreessNotifyer = new ProgressNotificationHandler(this);
+//        registerHandler(1, new Event("DMA_MSG_SCOMO_DL_PROGRESS").addVar(new EventVar("DMA_VAR_SCOMO_ISSILENT", 0)),
+//                UI_MODE_BACKGROUND, dlProgreessNotifyer);
 
-        // show dl complete notification only if we are not in silent mode
-        registerHandler(1, new Event("DMA_MSG_SET_DL_COMPLETED_ICON").addVar(new EventVar("DMA_VAR_SCOMO_ISSILENT", 0)),
-                UI_MODE_BOTH_FG_AND_BG, new DownloadCompleteNotificiationHandler(this));
+//        // show dl complete notification only if we are not in silent mode
+//        registerHandler(1, new Event("DMA_MSG_SET_DL_COMPLETED_ICON").addVar(new EventVar("DMA_VAR_SCOMO_ISSILENT", 0)),
+//                UI_MODE_BOTH_FG_AND_BG, new DownloadCompleteNotificiationHandler(this));
 
-        //SCOMO device-initiated
-        registerHandler(1, new Event("DMA_MSG_SCOMO_SET_DL_TIMESLOT"),
-                UI_MODE_BOTH_FG_AND_BG,
-                new ScomoAlarmSetter(this));
+//        //SCOMO device-initiated
+//        registerHandler(1, new Event("DMA_MSG_SCOMO_SET_DL_TIMESLOT"),
+//                UI_MODE_BOTH_FG_AND_BG,
+//                new ScomoAlarmSetter(this));
 
         //LAWMO Wipe
         registerHandler(1, new Event("DMA_MSG_LAWMO_WIPE_AGENT_LAUNCH"),
@@ -882,20 +887,20 @@ public class ClientService extends SmmService
         registerHandler(1, new Event("DMA_MSG_ENROLL_REMOVE_BOOKMARK"),
                 UI_MODE_BOTH_FG_AND_BG, bookmarkHandler);
 
-        registerHandler(1, new Event("DMA_MSG_SCOMO_DL_CONFIRM_UI").addVar(new EventVar("DMA_VAR_SCOMO_ISSILENT", 1)),
-                UI_MODE_BACKGROUND, 
-                new EventHandler(this) {
-            @Override
-            protected void genericHandler(Event ev) {
-                sendEvent(new Event("DMA_MSG_SCOMO_ACCEPT"));
-            }
-        });
+//        registerHandler(1, new Event("DMA_MSG_SCOMO_DL_CONFIRM_UI").addVar(new EventVar("DMA_VAR_SCOMO_ISSILENT", 1)),
+//                UI_MODE_BACKGROUND,
+//                new EventHandler(this) {
+//            @Override
+//            protected void genericHandler(Event ev) {
+//                sendEvent(new Event("DMA_MSG_SCOMO_ACCEPT"));
+//            }
+//        });
 
-        //show scomo dl failure as _notification_
-        registerHandler(1, new Event("DMA_MSG_DNLD_FAILURE")
-        .addVar(new EventVar("DMA_VAR_SCOMO_ISSILENT", 0))
-        .addVar(new EventVar("DMA_VAR_DL_RETRY_COUNTER", 0)),
-        UI_MODE_BACKGROUND, dlInterruptionNotifier);
+//        //show scomo dl failure as _notification_
+//        registerHandler(1, new Event("DMA_MSG_DNLD_FAILURE")
+//        .addVar(new EventVar("DMA_VAR_SCOMO_ISSILENT", 0))
+//        .addVar(new EventVar("DMA_VAR_DL_RETRY_COUNTER", 0)),
+//        UI_MODE_BACKGROUND, dlInterruptionNotifier);
 
         // Register B2D_GET_ALL_CONDITIONS_VALUES only for reference code - this is a mock 
         registerHandler(1, new Event("B2D_GET_ALL_CONDITIONS_VALUES"),
@@ -988,21 +993,21 @@ public class ClientService extends SmmService
 
         // General behaviour for Device and Automotive
         // Silent, background or foreground, initiated by server, user, device. 
-        registerHandler(1, new Event("DMA_MSG_SCOMO_INS_CONFIRM_UI").addVar(new EventVar("DMA_VAR_SCOMO_ISSILENT", 1)),
-                UI_MODE_BOTH_FG_AND_BG, 
-                new EventHandler(this) {
-            @Override
-            protected void genericHandler(Event ev) {
-                sendEvent(new Event("DMA_MSG_SCOMO_ACCEPT"));
-            }
-        });
+//        registerHandler(1, new Event("DMA_MSG_SCOMO_INS_CONFIRM_UI").addVar(new EventVar("DMA_VAR_SCOMO_ISSILENT", 1)),
+//                UI_MODE_BOTH_FG_AND_BG,
+//                new EventHandler(this) {
+//            @Override
+//            protected void genericHandler(Event ev) {
+//                sendEvent(new Event("DMA_MSG_SCOMO_ACCEPT"));
+//            }
+//        });
 
         // Non-silent, Non-critical, background, initiated by user, device, server.
-        registerHandler(1, new Event("DMA_MSG_SCOMO_INS_CONFIRM_UI")
-        .addVar(new EventVar("DMA_VAR_SCOMO_ISSILENT", 0))
-        .addVar(new EventVar("DMA_VAR_SCOMO_CRITICAL", 0)),
-        UI_MODE_BACKGROUND,
-        new InstallConfirmNotificationHandler(this));
+//        registerHandler(1, new Event("DMA_MSG_SCOMO_INS_CONFIRM_UI")
+//        .addVar(new EventVar("DMA_VAR_SCOMO_ISSILENT", 0))
+//        .addVar(new EventVar("DMA_VAR_SCOMO_CRITICAL", 0)),
+//        UI_MODE_BACKGROUND,
+//        new InstallConfirmNotificationHandler(this));
 
 
         // register HTML5 or Android Activities
@@ -1011,6 +1016,16 @@ public class ClientService extends SmmService
         } else {
             AndroidEventRegister();
         }
+
+
+        /////////////////////////////////
+        // Micronet/DS 2016-08-18: Use our own handlers
+
+        registerMicronetHandlers();
+
+        // END Micronet/DS 2016-08-18: Use our own handlers
+        /////////////////////////////////
+
     }
 
     void writeFile(byte[] aInput, File aOutputFile){
@@ -1158,4 +1173,40 @@ public class ClientService extends SmmService
 
         sendInitialRoamingState(connManager, listener);
     }
+
+
+
+
+
+    //////////////////////////////////////////////////////////////////////////
+    // registerMicronetHandlers()
+    //      added by Micronet/DS 2016-08-18
+    //      most normal handlers are commented out and these are the ones that are used.
+    //////////////////////////////////////////////////////////////////////////
+    public void registerMicronetHandlers() {
+
+
+        registerHandler(1, new Event("DMA_MSG_SCOMO_REBOOT_CONFIRM_REQUEST"),
+                UI_MODE_BOTH_FG_AND_BG,
+                MicronetConfirmHandler.getRebootRequestHandler(this));
+
+        registerHandler(1, new Event("DMA_MSG_SCOMO_NOTIFY_DL_UI"),
+                UI_MODE_BACKGROUND,
+                MicronetConfirmHandler.getNotifyDownloadHandler(this));
+
+        registerHandler(1, new Event("DMA_MSG_SCOMO_DL_CONFIRM_UI"),
+                UI_MODE_BOTH_FG_AND_BG,
+                MicronetConfirmHandler.getConfirmDownloadHandler(this));
+
+
+        registerHandler(1, new Event("DMA_MSG_SCOMO_INS_CONFIRM_UI"),
+                UI_MODE_BOTH_FG_AND_BG,
+                MicronetConfirmHandler.getConfirmInstallHandler(this));
+
+        registerHandler(1, new Event("DMA_MSG_SCOMO_SET_DL_TIMESLOT"),
+                UI_MODE_BOTH_FG_AND_BG,
+                MicronetConfirmHandler.getConfirmDLTimeSlotHandler(this));
+    }
+
+
 }

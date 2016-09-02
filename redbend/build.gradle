@@ -11,10 +11,10 @@ android {
 
     defaultConfig {
         applicationId "com.redbend.client"
-        minSdkVersion 14
-        targetSdkVersion 14
+        minSdkVersion 15
+        targetSdkVersion 15
         versionCode 100201008
-        versionName "MN10.2.1.8"
+        versionName "10.2.1.7-MN-2"
 
         ndk {
             moduleName "libvdmplat"
@@ -40,6 +40,7 @@ dependencies {
     compile files('libs/com.redbend.android.jar')
     compile files('libs/com.redbend.vdm.comm.jar')
     compile files('libs/com.redbend.vdm.swmc_helper.jar')
+    compile fileTree(dir: 'libs', include: ['.jar','.so'])
 }
 
 def props = new Properties()

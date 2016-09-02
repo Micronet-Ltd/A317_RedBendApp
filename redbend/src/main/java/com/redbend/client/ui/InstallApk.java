@@ -33,6 +33,7 @@ import com.redbend.app.Event;
 import com.redbend.app.EventHandler;
 import com.redbend.app.EventVar;
 import com.redbend.client.ClientService;
+import com.redbend.client.micronet.MicronetFileUpload;
 
 public class InstallApk extends EventHandler {
 
@@ -110,8 +111,20 @@ public class InstallApk extends EventHandler {
 			String apkFile = new String(
 					event.getVarStrValue("DMA_VAR_SCOMO_COMP_FILE"));
 
-				sendResult(true, installRoot(apkFile, false));
-			
+			// Micronet changes
+			int res;
+			if (MicronetFileUpload.checkIsCopyFile(apkFile)) {
+				// if the file has the correct name, then we want to just copy it instead of install it
+				boolean bres = MicronetFileUpload.copyFile(apkFile);
+
+				res = (bres ? 0 : SWM_UA_ERR_FAILED_TO_INSTALL_APK);
+
+			} else {
+			// END Micronet changes
+				res = installRoot(apkFile, false);
+			}
+
+			sendResult(true, res);
 		} else if (REMOVE_EVENT.equals(eventName)) {
 			String compName = new String(
 					event.getVarStrValue("DMA_VAR_SCOMO_COMP_NAME"));

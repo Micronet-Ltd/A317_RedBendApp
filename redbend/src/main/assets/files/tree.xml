@@ -175,7 +175,7 @@
 					<get/><replace/>
 					<type>text/plain</type>
 					<format>int</format>
-					<value>168</value>
+					<value>7</value>
 				</leaf>
 				<leaf>
 					<name>RecoveryPollingTimeout</name>
