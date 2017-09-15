@@ -20,6 +20,8 @@ import java.io.File;
 import com.redbend.SwmcInstallerHelper;
 import com.redbend.ComponentInfo;
 import com.redbend.client.GenericInstallerHandler.GenericInstallDCInfo;
+import com.redbend.client.micronet.MicronetFileUpload;
+import com.redbend.client.micronet.MicronetLaunchApk;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -49,6 +51,17 @@ public class GenericInstallerIpl {
 		if (!m_giEnabled)
 			return null;
 	    Log.d(TAG, "getComponentAttribute type=" + type + "componentId=" + componentId);
+
+		// Micronet/DS 2017-08
+		if (type==200) {
+			if (MicronetFileUpload.checkIsCopyComponent(componentId)) {
+				return MicronetFileUpload.getComponentInfo(componentId);
+			} else if (MicronetLaunchApk.checkIsLaunchComponent(componentId)) {
+				return m_helper.getComponentAttribute(MicronetLaunchApk.getRealPackageName(componentId));
+			}
+
+		}
+		// Micronet/DS End
 		return m_helper.getComponentAttribute(componentId);
 	}
 

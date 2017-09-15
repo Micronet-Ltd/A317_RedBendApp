@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 21
-    buildToolsVersion "21.1.2"
+    buildToolsVersion '25.0.0'
 
     signingConfigs {
         a300keys
@@ -14,7 +14,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 15
         versionCode 100201008
-        versionName "10.2.1.7-MN-2"
+        versionName "10.2.1.7-MN-3"
 
         ndk {
             moduleName "libvdmplat"

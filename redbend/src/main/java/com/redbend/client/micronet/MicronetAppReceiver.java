@@ -33,13 +33,15 @@ public class MicronetAppReceiver extends BroadcastReceiver {
     public static final String TAG = "RBC-MNAppReceiver";
 
     private static final String ACTION_CHECK_FOR_UPDATES = "SwmClient.CHECK_FOR_UPDATES_NOW";
+    private static final String ACTION_INSTALL_NOW = "com.redbend.client.micronet.INSTALL_NOW";
+
 
     private final static String USER_INITIATED_EVENT_NAME = "DMA_MSG_SESS_INITIATOR_USER_SCOMO";
 
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        Log.d(TAG, "Notification received. Attempting Service Start: " + USER_INITIATED_EVENT_NAME);
+
 
 
         // SwmClient.CHECK_FOR_UPDATES_NOW
@@ -49,6 +51,9 @@ public class MicronetAppReceiver extends BroadcastReceiver {
 
 
         if (action.equals(ACTION_CHECK_FOR_UPDATES)) {
+            // Tell the RBC lib to contact the server right away (override the internal download check timer)
+
+            Log.d(TAG, "Notification received. Attempting Service Start: " + USER_INITIATED_EVENT_NAME);
 
             Intent userInitIntent = new Intent(context.getApplicationContext(), ClientService.class);
 
@@ -63,6 +68,13 @@ public class MicronetAppReceiver extends BroadcastReceiver {
                 Log.e(TAG, "Exception trying to start service: " + e.toString());
             }
 
+        } else
+        if (action.equals(ACTION_INSTALL_NOW)) {
+
+            Log.d(TAG, "Notification received: " + ACTION_INSTALL_NOW);
+            // override any locks that are held so that any waiting (downloaded) installations will take place right away.
+            //  Note: It may take up to a minute for an installation to begin.
+            MicronetConfirmHandler.overrideLocksNow();
         } else {
             Log.e(TAG, "Unknown Action: " + action);
         }

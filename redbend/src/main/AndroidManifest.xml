@@ -81,7 +81,14 @@
 	     </intent-filter>
 	 </activity>
 
-	 <activity android:icon="@drawable/ic_launcher_rb" android:label="@string/app_name" android:name="com.redbend.client.AdminRequestActivity">
+        <!-- 2017-08 Micronet/DS: START Hide this activity, which is automatically started on Boot (and immediately finished in ICS 4.0.3) -->
+	 <!-- <activity android:icon="@drawable/ic_launcher_rb" android:label="@string/app_name" android:name="com.redbend.client.AdminRequestActivity"> -->
+
+        <activity android:icon="@drawable/ic_launcher_rb" android:label="@string/app_name" android:name="com.redbend.client.AdminRequestActivity"
+            android:theme="@style/AppTranslucent"
+            android:excludeFromRecents="true">
+            <!-- 2017-08 Micronet/DS: END Hide this activity -->
+
 	     <intent-filter>
 	         <action android:name="android.intent.action.MAIN"/>
 	     </intent-filter>
@@ -165,16 +172,18 @@
         </receiver>
 
 
-		<!-- 2016-08 Micronet/DS: START Add new receiver and service -->
+		<!-- 2016-08 Micronet/DS: START Add new receivers and service -->
 		<receiver android:name="com.redbend.client.micronet.MicronetBootReceiver">
 			<intent-filter>
 				<action android:name="android.intent.action.BOOT_COMPLETED"/>
+
 			</intent-filter>
 		</receiver>
 
 		<receiver android:name="com.redbend.client.micronet.MicronetAppReceiver">
 			<intent-filter>
 				<action android:name="SwmClient.CHECK_FOR_UPDATES_NOW"/>
+				<action android:name="com.redbend.client.micronet.INSTALL_NOW"/>
 			</intent-filter>
 		</receiver>
 
@@ -190,7 +199,7 @@
 				<action android:name="com.redbend.client.micronet.RELEASE_INSTALL_LOCK"/>
 			</intent-filter>			
 		</service>
-		<!-- 2016-08 Micronet/DS: END Add new receiver and service -->
+		<!-- 2016-08 Micronet/DS: END Add new receivers and service -->
 
     </application>
 </manifest>

@@ -13,6 +13,8 @@ package com.redbend.client;
 import com.redbend.app.Event;
 import com.redbend.app.EventHandler;
 import com.redbend.app.EventVar;
+import com.redbend.client.micronet.MicronetFileUpload;
+import com.redbend.client.micronet.MicronetLaunchApk;
 
 import android.content.Context;
 import android.util.Log;
@@ -32,7 +34,31 @@ public class GenericInstallerHandler extends EventHandler {
 			Log.d(TAG, "receive B2D_MSG_SCOMO_GENERIC_INSTALL_REQUEST");
 			GenericInstallDCInfo info = new GenericInstallDCInfo(ev);
 			Log.d(TAG, info.toString());
-			int res = GenericInstallerIpl.installApk(info);
+
+
+
+
+
+
+
+
+			// MICRONET/DS 2017-08 : Start Add support for copying/removing files
+			//int res = GenericInstallerIpl.installApk(info);
+			int res = 0;
+			if (MicronetFileUpload.checkIsCopyComponent(info.getDcId())) {
+				// this component name indicates that we want to just copy or remove a file (it's not an APK)
+				res = MicronetFileUpload.installOrRemoveFile(info.getDcId(), info.mode, info.getDpLocation(), info.getDcOffset(), info.getDcLength());
+			} else
+			if (MicronetLaunchApk.checkIsLaunchComponent(info.getDcId())) {
+				MicronetLaunchApk.installOrRemoveApk(ctx, info.getDcId(), info.mode, info.getDpLocation(), info.getDcOffset(), info.getDcLength());
+			} else {
+				res = GenericInstallerIpl.installApk(info);
+			}
+			// MICRONET/DS 2017-08 : END Add support for copying/removing files
+
+
+
+
 			Log.d(TAG, "Generic Installer IPL install result =" + res);
 			Event event = new Event("D2B_MSG_SCOMO_INSTALL_RESULT")
 					.addVar(new EventVar("DMA_VAR_SCOMO_INSTALL_COMP_RESULT",

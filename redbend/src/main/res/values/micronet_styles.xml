@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- this file contains styles that were added by Micronet in order to hide certain activities -->
+
+
+<!-- AppTranslucent can be applied to an activity and will cause it to not appear when launched -->
+
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <style name="AppTranslucent" parent="android:style/Theme.Holo">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation</item>
+    </style>
+
+</resources>

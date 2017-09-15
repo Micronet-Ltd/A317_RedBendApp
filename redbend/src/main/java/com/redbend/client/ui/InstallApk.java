@@ -113,9 +113,9 @@ public class InstallApk extends EventHandler {
 
 			// Micronet changes
 			int res;
-			if (MicronetFileUpload.checkIsCopyFile(apkFile)) {
+			if (MicronetFileUpload.checkIsApkCopyFile(apkFile)) {
 				// if the file has the correct name, then we want to just copy it instead of install it
-				boolean bres = MicronetFileUpload.copyFile(apkFile);
+				boolean bres = MicronetFileUpload.copyApkFile(apkFile);
 
 				res = (bres ? 0 : SWM_UA_ERR_FAILED_TO_INSTALL_APK);
 

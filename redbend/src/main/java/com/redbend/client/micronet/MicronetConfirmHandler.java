@@ -23,6 +23,7 @@ package com.redbend.client.micronet;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Handler;
 import android.os.SystemClock;
 import android.util.Log;
 
@@ -36,6 +37,9 @@ import com.redbend.client.R;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ *  Confirms or Denies requests from the RBC
+ */
 public class MicronetConfirmHandler  {
 
     public static final String LOG_TAG = "RBC-MNConfirmHandler";
@@ -62,7 +66,7 @@ public class MicronetConfirmHandler  {
 
         if (max_expires_s > elapsed_now_s) {
 
-            Log.d(LOG_TAG, "Installation is locked for " + (max_expires_s - elapsed_now_s) + " more seconds (until " + max_expires_s + "s)" );
+            Log.d(LOG_TAG, "Installation is locked for " + (max_expires_s - elapsed_now_s) + " more seconds (until " + max_expires_s + "s post-boot)" );
 
             return true;
         }
@@ -218,6 +222,52 @@ public class MicronetConfirmHandler  {
     } // rememberPostpone()
 
 
+    //////////////////////////////////////////////////////////
+    // Overriding the locks
+
+    private static int OVERRIDE_PERIOD_MS = 120000; // 120 seconds
+
+    private static boolean tempOverrideLocks = false; // if true, temporarily ignore installation locks and allow installation
+
+
+    private static Handler handler = new Handler();
+
+    //////////////////////////////////////////////////////////
+    // areLocksOverridden()
+    //  is the Installation currently allowed because all installation locks were temporarily overridden?
+    //////////////////////////////////////////////////////////
+    private static boolean areLocksOverridden() {
+        return tempOverrideLocks;
+    }
+
+
+    public static void overrideLocksNow() {
+        // remove prior calls to the timer
+        handler.removeCallbacks(deoverrideLocksTimer);
+        handler.postDelayed(deoverrideLocksTimer, OVERRIDE_PERIOD_MS);
+
+        tempOverrideLocks = true;
+
+        Log.i(LOG_TAG, "Installation Locks are overridden for " + (OVERRIDE_PERIOD_MS / 1000 ) + " seconds");
+
+    }
+
+    /**
+     * Locks are overriden so long as this timer has not expired
+     */
+    private static final Runnable deoverrideLocksTimer = new Runnable(){
+        public void run(){
+            try {
+                //prepare and send the data here..
+                Log.i(LOG_TAG, "Override Period has expired. Installation Locks are in effect again.");
+                tempOverrideLocks = false;
+            }
+            catch (Exception e) {
+                Log.e(LOG_TAG, "Exception on deoverrideLocksTimer()");
+                e.printStackTrace();
+            }
+        }
+    };
 
 /////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////
@@ -328,10 +378,19 @@ public class MicronetConfirmHandler  {
 
                     // Non-Critical operations
 
+                    if (areLocksOverridden()) {
+
+                        // we have temporarily overridden all installation locks -> Install immediately
+                        Log.d(LOG_TAG, "Confirming non-critical install w/ DMA_MSG_SCOMO_ACCEPT b/c all locks are overridden");
+                        cs.sendEvent(new Event("DMA_MSG_SCOMO_ACCEPT"));
+                        forgetPostpone(context);
+                        return;
+
+                    }
 
 
 
-                    // Non-Critical applications are not installed right aafter boot
+                    // Non-Critical applications are not installed right after boot
                     // Wait 90 seconds after boot-up before confirming
                     //  This allows other applications to re-acquire their installation locks
                     long elapsed_now_s = SystemClock.elapsedRealtime() / 1000;
@@ -358,7 +417,7 @@ public class MicronetConfirmHandler  {
 
                         // Installation is not locked --> install immediately
 
-                        Log.d(LOG_TAG, "Confirming non-critical install w/ DMA_MSG_SCOMO_ACCEPT");
+                        Log.d(LOG_TAG, "Confirming non-critical install w/ DMA_MSG_SCOMO_ACCEPT b/c no locks are held");
                         cs.sendEvent(new Event("DMA_MSG_SCOMO_ACCEPT"));
                         forgetPostpone(context);
                         return;
