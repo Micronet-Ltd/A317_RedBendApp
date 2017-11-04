@@ -18,5 +18,5 @@ interface IMicronetRBClientAidlInterface {
 
     String getVersion(); // gets the version of the client
 
-
+    int setRoamingMode(boolean allowRoaming); // allow or disallow roaming
 }

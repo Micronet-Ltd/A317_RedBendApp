@@ -50,6 +50,7 @@ import com.redbend.android.RbException.VdmError;
 import com.redbend.app.*;
 import com.redbend.client.micronet.MicronetAppBroadcaster;
 import com.redbend.client.micronet.MicronetConfirmHandler;
+import com.redbend.client.micronet.MicronetRoaming;
 import com.redbend.client.ui.*;
 import com.redbend.client.uialerts.*;
 import com.redbend.client.R;
@@ -1127,7 +1128,15 @@ public class ClientService extends SmmService
         }
 
         public void updateRoamingState(boolean isRoaming) {
-            Log.d(LOG_TAG, "State Change,  Roaming: " + isRoaming); 
+            Log.d(LOG_TAG, "State Change,  Roaming: " + isRoaming);
+
+
+            // Micronet/DS Added 2017-10-25
+
+            isRoaming = MicronetRoaming.getAdjustedRoamingStatus(getApplicationContext(), isRoaming);
+            // End Micronet/DS Added 2017-10-25
+
+
             sendRoamingUpdate(isRoaming);
         }
 

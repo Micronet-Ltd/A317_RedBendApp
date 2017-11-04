@@ -40,11 +40,18 @@ public class MicronetBindingService extends Service {
     public static final String START_ACTION_PING = "com.redbend.client.micronet.PING";
     public static final String START_ACTION_CLEAR_INSTALL_LOCKS = "com.redbend.client.micronet.CLEAR_INSTALL_LOCKS";
     public static final String START_ACTION_ACQUIRE_INSTALL_LOCK = "com.redbend.client.micronet.ACQUIRE_INSTALL_LOCK";
-    public static final String START_ACTION_RELEASE_INSTALL_LOCK = "com.redbend.client.micronet.RELEASE_INSTLAL_LOCK";
+    public static final String START_ACTION_RELEASE_INSTALL_LOCK = "com.redbend.client.micronet.RELEASE_INSTALL_LOCK";
+
+
+    public static final String START_ACTION_SET_ROAMING_MODE = "com.redbend.client.micronet.SET_ROAMING_MODE";
 
     // Extras for Actions
     public static final String START_EXTRA_LOCK_NAME = "LOCK_NAME";
     public static final String START_EXTRA_SECONDS = "SECONDS";
+
+
+    public static final String START_EXTRA_ALLOW_ROAMING = "ALLOW_ROAMING"; // boolean
+
 
 
     // Reply Actions
@@ -69,7 +76,7 @@ public class MicronetBindingService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
-        // TODO: Return the communication channel to the service.
+
         return mBinder;
 
         //throw new UnsupportedOperationException("Not yet implemented");
@@ -91,6 +98,11 @@ public class MicronetBindingService extends Service {
 
                 sendBroadcast(replyIntent);
 
+            } else
+            if (action.equals(START_ACTION_SET_ROAMING_MODE)) {
+                boolean allowRoaming = intent.getBooleanExtra(START_EXTRA_ALLOW_ROAMING, false);
+
+                setRoamingAllowed(allowRoaming);
             } else
             if (action.equals(START_ACTION_CLEAR_INSTALL_LOCKS)) {
 
@@ -219,7 +231,14 @@ public class MicronetBindingService extends Service {
 
 
 
-
+    private int setRoamingAllowed(boolean allowRoaming) {
+        if (allowRoaming) {
+            MicronetRoaming.setRoamingMode(this, MicronetRoaming.MODE_IGNORE_ROAMING);
+        } else {
+            MicronetRoaming.setRoamingMode(this, MicronetRoaming.MODE_RESPECT_ROAMING);
+        }
+        return 0;
+    } // setRoaming
 
 
 
@@ -259,13 +278,28 @@ public class MicronetBindingService extends Service {
 
         }
 
+
+
         ////////////////////////////////////////////////
         // getVersion()
         //  gets the version of the client
         ////////////////////////////////////////////////
+        @Override
         public String getVersion() throws RemoteException {
 
             return BuildConfig.VERSION_NAME;
+        }
+
+
+        ////////////////////////////////////////////////
+        // setRoamingMode()
+        //  returns 0 if it was set
+        ////////////////////////////////////////////////
+        @Override
+        public int setRoamingMode(boolean allowRoaming) throws RemoteException {
+
+            return setRoamingAllowed(allowRoaming);
+
         }
 
 

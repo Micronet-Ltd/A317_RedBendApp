@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 21
+    compileSdkVersion 26
     buildToolsVersion '25.0.0'
 
     signingConfigs {
@@ -13,8 +13,8 @@ android {
         applicationId "com.redbend.client"
         minSdkVersion 15
         targetSdkVersion 15
-        versionCode 100201008
-        versionName "10.2.1.7-MN-3"
+        versionCode 100201009
+        versionName "10.2.1.7-MN-4"
 
         ndk {
             moduleName "libvdmplat"

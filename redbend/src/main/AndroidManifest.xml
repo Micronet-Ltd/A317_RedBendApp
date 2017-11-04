@@ -197,6 +197,7 @@
 				<action android:name="com.redbend.client.micronet.PING"/>
 				<action android:name="com.redbend.client.micronet.ACQUIRE_INSTALL_LOCK"/>
 				<action android:name="com.redbend.client.micronet.RELEASE_INSTALL_LOCK"/>
+				<action android:name="com.redbend.client.micronet.SET_ROAMING_MODE"/>
 			</intent-filter>			
 		</service>
 		<!-- 2016-08 Micronet/DS: END Add new receivers and service -->
