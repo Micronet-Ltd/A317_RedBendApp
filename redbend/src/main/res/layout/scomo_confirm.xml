@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+	<ScrollView
+		android:layout_height="wrap_content"
+		android:layout_width="match_parent"
+		android:orientation="vertical"
+		android:layout_weight="1"
+		android:paddingLeft="2dip"
+		android:paddingRight="2dip"
+		android:paddingTop="4dip">
+		
+		<LinearLayout
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			android:orientation="vertical"
+			>
+			<TextView 
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				style="@style/TextViewStyle.PaddingLeft"
+				android:id="@+id/scomoConfirmTextView"
+				android:paddingBottom="0dip"
+				/>
+		 	<TextView 
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				style="@style/TextViewStyle.PaddingLeft"
+				android:id="@+id/updateRemoveTitle"
+				android:paddingTop="0dip"/>			
+			
+			<TextView 
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				style="@style/TextViewStyle.PaddingLeftAndSmallerFont"
+				android:id="@+id/updateRemoveList"
+				android:paddingTop="0dip"/>
+									
+			<TextView
+	            android:id="@+id/scomoDlInfoUrl"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:paddingTop="5dip"
+	            style="@style/TextViewStyle.PaddingLeft"
+	            android:paddingBottom="20dip"
+	  	    	android:text="" />
+	    </LinearLayout>
+	</ScrollView>
+	<LinearLayout
+	    android:layout_height="wrap_content"
+		android:layout_width="match_parent">
+	    	
+	    	<View style="@style/Divider"/>
+	    	  
+	</LinearLayout>
+	
+	<LinearLayout
+		android:layout_height="wrap_content"
+		android:layout_width="match_parent"
+		android:id="@+id/linearLayout2"
+		android:orientation="horizontal"
+		style="@style/ButtomBarButton"
+		android:paddingLeft="2dip"
+		android:paddingRight="2dip"
+		android:paddingTop="4dip">
+
+        
+
+	 	<Button
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:text="@string/yes"
+			android:id="@+id/ScomoDlConfirmButton"
+			android:onClick="onButtonClicked"
+			android:layout_width="match_parent">
+		</Button>
+		<Button
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:text="@string/no"
+			android:id="@+id/ScomoDlCancelButton"
+			android:onClick="onButtonClicked"
+			android:layout_width="match_parent">
+		</Button>
+		<Button
+			android:id="@+id/ScomoDlPostponeButton"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:onClick="onButtonClicked"
+			android:text="@string/postpone" >
+		</Button>
+	</LinearLayout>
+</LinearLayout>

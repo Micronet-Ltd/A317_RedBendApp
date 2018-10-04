@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+      
+    <!-- Activity body font style -->
+    <style name="TextViewStyle" >
+        <item name="android:textColor">#757575</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:capitalize">characters</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:typeface">sans</item>        
+        <item name="android:inputType">textMultiLine|textNoSuggestions</item>
+    </style>
+
+  <!-- Activity body font style with padding left-->
+    <style name="TextViewStyle.PaddingLeft" parent="@style/TextViewStyle" >
+       <item name="android:paddingLeft">20sp</item>
+       <item name="android:paddingRight">20sp</item>
+    </style>
+    
+   <!-- Activity body font style with padding left and small font-->
+    <style name="TextViewStyle.PaddingLeftAndSmallerFont" parent="@style/TextViewStyle.PaddingLeft">
+      	<item name="android:textSize">16sp</item>
+      	<item name="android:paddingLeft">40sp</item>
+    </style>   
+    
+    <style name="ButtonStyle" parent="@android:style/Widget.DeviceDefault.Button">
+        <item name="android:textColor">#009688</item>
+        <item name="android:background">#00000000</item>
+        <item name="android:layout_alignParentRight">false</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:inputType">textMultiLine|textNoSuggestions</item>
+    </style>
+    
+    <style name="Divider">
+	    <item name="android:layout_width">match_parent</item>
+	    <item name="android:layout_height">1dp</item>
+	    <item name="android:background">?android:attr/listDivider</item>
+	</style>
+	
+    <!-- Application theme -->
+    <style name="ActionBarTheme" parent="@android:Theme.Material.Light.DarkActionBar">       
+        <item name="android:buttonStyle">@style/ButtonStyle</item>
+    </style> 
+    
+    <style name="ButtomBarButton" parent="style/ActionBarTheme"></style>
+    
+</resources>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+				android:layout_width="fill_parent" 
+				android:layout_height="fill_parent">
+				
+	<ScrollView android:id="@+id/ScrollView" 
+				android:scrollbars="vertical"
+				android:fadeScrollbars="false" 
+				android:layout_width="fill_parent"
+				android:layout_height="fill_parent">
+
+		<TextView android:id="@+id/ErrorText" 
+				  android:layout_width="wrap_content"
+				  android:layout_height="342px"
+				  android:text="TextView"
+			      android:layout_centerHorizontal="true"
+			      android:paddingBottom="50sp" 
+			      style="@style/TextViewStyle.PaddingLeft"
+			      />
+
+	</ScrollView>
+	
+	
+	
+    <RelativeLayout 
+        android:id="@+id/InnerRelativeLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" >
+		
+		<View style="@style/Divider"/>
+        <Button 
+            android:id="@+id/ConfirmButton"   
+            android:text="@string/close" 
+	    	
+            android:layout_width="fill_parent" 
+            
+            android:layout_height="wrap_content">
+        </Button>
+
+    </RelativeLayout>
+
+</RelativeLayout>

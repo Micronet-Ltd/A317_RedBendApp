@@ -1,6 +1,0 @@
-
-<resources>
-<string name="common_descmo_missing_admin_permissions">Configuring device.</string>
-<string name="common_descmo_title_missing_admin_permissions">Configuring device.</string>
-<string name="common_descmo_text_missing_admin_permissions">Missing permissions to apply settings. Tap to apply permissions.</string>
-</resources>

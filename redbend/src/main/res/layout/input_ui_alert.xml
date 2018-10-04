@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent">
+
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		android:orientation="vertical" android:layout_width="fill_parent"
+		android:layout_height="fill_parent">
+
+		<TextView android:id="@+id/InputUIAlertText" 
+			android:layout_width="fill_parent" 
+			style="@style/TextViewStyle.PaddingLeft"
+			android:layout_height="wrap_content" 
+			android:layout_alignParentTop="true" />
+		
+		<EditText android:id="@+id/InputUIAlertTextInput" 
+			android:layout_width="fill_parent" android:layout_height="wrap_content" 
+			android:layout_alignParentTop="true" />
+	</LinearLayout>
+	
+	<LinearLayout android:id="@+id/InnerRelativeLayout"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true" android:orientation="vertical"
+		android:gravity="center_horizontal">
+
+	    <View style="@style/Divider"/>
+		<Button android:id="@+id/ConfirmButton" android:layout_width="fill_parent"
+			android:layout_alignParentRight="false" android:text="@string/ok"
+			android:layout_height="wrap_content" />
+		
+		<Button android:id="@+id/CancelButton" android:layout_width="fill_parent"
+			android:layout_alignParentRight="false" android:text="@string/cancel"
+			android:layout_height="wrap_content" />
+		
+	</LinearLayout>
+</RelativeLayout>
