@@ -1,0 +1,3 @@
+# Android fstab file.
+#<src>  <mnt_point> <type>  <mnt_flags and options> <fs_mgr_flags>
+data	/data/data/com.redbend.client/files/temp_folder/data/app	none 	defaults	defaults,name=data

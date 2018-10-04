@@ -1,0 +1,51 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion '25.0.0'
+
+    signingConfigs {
+        a300keys
+    }
+
+
+    defaultConfig {
+        applicationId "com.redbend.client"
+        minSdkVersion 15
+        targetSdkVersion 15
+        versionCode 100201009
+        versionName "10.2.1.7-MN-5"
+
+        ndk {
+            moduleName "libvdmplat"
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            signingConfig signingConfigs.a300keys
+        }
+        debug {
+            signingConfig signingConfigs.a300keys
+        }
+
+    }
+}
+
+dependencies {
+    compile project(':common')
+    compile project(':swm_common')
+    compile files('libs/com.redbend.android.jar')
+    compile files('libs/com.redbend.vdm.comm.jar')
+    compile files('libs/com.redbend.vdm.swmc_helper.jar')
+    compile fileTree(dir: 'libs', include: ['.jar','.so'])
+}
+
+def props = new Properties()
+props.load(new FileInputStream(rootProject.file("a300keys.properties")))
+android.signingConfigs.a300keys.storeFile rootProject.file(props.keyStore)
+android.signingConfigs.a300keys.storePassword props.keyStorePassword
+android.signingConfigs.a300keys.keyAlias props.keyAlias
+android.signingConfigs.a300keys.keyPassword props.keyAliasPassword

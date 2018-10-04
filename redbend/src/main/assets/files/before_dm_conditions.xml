@@ -1,0 +1,8 @@
+<IF>
+	<EQ>
+		<ID>SYNC_INSTALLERS_INIT_STATUS</ID>
+		<INT>0</INT>
+	</EQ>
+		<THEN>Conditions are met</THEN>
+		<ELSE>failed to initialize SWM client installers</ELSE>
+</IF>

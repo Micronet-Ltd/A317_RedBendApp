@@ -1,0 +1,206 @@
+<!-- 2016-08 Micronet/DS: REMOVE default version code and name to prevent possible future confusion
+  		since these values are overwritten by the build.gradle script
+
+	<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+	android:versionCode="100201007" android:versionName="10.2.1.7-11-g6fea318"
+	package="com.redbend.client">
+-->
+
+	<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+		package="com.redbend.client">
+
+		<!-- 2016-08 Micronet/DS: START Add new permission -->
+
+		<permission
+			android:name="com.redbend.client.micronet.permission.CONTROL_FOTA"
+			android:protectionLevel="signature" />
+
+
+		<!-- 2016-08 Micronet/DS: END Add new permission -->
+
+
+
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
+	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+	<uses-permission android:name="android.permission.INTERNET"/>
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+	<uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+	<uses-permission android:name="android.permission.RECEIVE_WAP_PUSH"/>
+ 	<uses-permission android:name="android.permission.GET_TASKS"/>
+ 	<uses-permission android:name="android.permission.GET_ACCOUNTS"/>    
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+	<uses-permission android:name="android.permission.INSTALL_PACKAGES"/>
+	<uses-permission android:name="android.permission.DELETE_PACKAGES"/>
+	<uses-permission android:name="android.permission.REBOOT"/>
+	<uses-permission android:name="android.permission.WAKE_LOCK"/>
+	<uses-permission android:name="com.redbend.client.permission.C2D_MESSAGE"/>
+	<uses-permission android:name="com.redbend.permission.EVENT_INTENT"/>	  
+	<uses-permission android:name="android.permission.ACCESS_CACHE_FILESYSTEM"/>
+	<uses-permission android:name="android.permission.BIND_DEVICE_ADMIN"/>
+	<uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+	<uses-permission android:name="android.permission.MANAGE_DEVICE_ADMINS"/>
+	<uses-permission android:name="android.permission.RECOVERY"/>
+	<uses-permission android:name="android.permission.BLUETOOTH"/>
+	
+	<uses-sdk android:minSdkVersion="14" android:targetSdkVersion="14"/>
+ 	
+	 <permission android:name="com.redbend.client.permission.C2D_MESSAGE" android:protectionLevel="signature"/> 
+        
+        
+	<permission android:description="@string/event_intent_permission_description" android:name="com.redbend.permission.EVENT_INTENT" android:protectionLevel="signatureOrSystem"/> 
+
+
+
+	 
+    <application android:allowClearUserData="true" android:icon="@drawable/ic_launcher_rb" android:label="@string/app_name" android:manageSpaceActivity="com.redbend.client.ManageSpaceActivity" android:persistent="true" android:theme="@style/ActionBarTheme">
+            
+    <service android:exported="false" android:name="com.redbend.client.BasicService" android:stopWithTask="false"/>
+            
+	<activity android:configChanges="orientation|screenSize|keyboardHidden" android:icon="@drawable/ic_launcher_rb" android:label="@string/app_name" android:name="com.redbend.client.StartupActivity" android:theme="@android:style/Theme.NoDisplay">
+         <intent-filter>
+            <action android:name="android.intent.action.MAIN"/>
+
+			 <!-- 2016-08 Micronet/DS: START Remove Launcher, this application should not be launched by icon -->
+           <!-- <category android:name="android.intent.category.LAUNCHER"/> -->
+			 <!-- 2016-08 Micronet/DS: END Remove Launcher-->
+          </intent-filter>
+    </activity>
+
+	 <activity android:icon="@drawable/ic_launcher_rb" android:label="@string/app_name" android:name="com.redbend.client.SwmEnrollActivity">
+	     <intent-filter>
+	         <action android:name="android.intent.action.MAIN"/>
+	     </intent-filter>
+	     <intent-filter>
+	         <action android:name="android.intent.action.VIEW"/>
+
+	         <category android:name="android.intent.category.DEFAULT"/>
+	         <category android:name="android.intent.category.BROWSABLE"/>
+
+	         <data android:scheme="redbend"/>
+	     </intent-filter>
+	 </activity>
+
+        <!-- 2017-08 Micronet/DS: START Hide this activity, which is automatically started on Boot (and immediately finished in ICS 4.0.3) -->
+	 <!-- <activity android:icon="@drawable/ic_launcher_rb" android:label="@string/app_name" android:name="com.redbend.client.AdminRequestActivity"> -->
+
+        <activity android:icon="@drawable/ic_launcher_rb" android:label="@string/app_name" android:name="com.redbend.client.AdminRequestActivity"
+            android:theme="@style/AppTranslucent"
+            android:excludeFromRecents="true">
+            <!-- 2017-08 Micronet/DS: END Hide this activity -->
+
+	     <intent-filter>
+	         <action android:name="android.intent.action.MAIN"/>
+	     </intent-filter>
+	     <intent-filter>
+	         <action android:name="android.intent.action.VIEW"/>
+
+	         <category android:name="android.intent.category.DEFAULT"/>
+
+	         <data android:scheme="redbend"/>
+	     </intent-filter>
+	 </activity>
+
+
+	<activity android:configChanges="orientation|screenSize|keyboardHidden" android:name="com.redbend.client.ManageSpaceActivity"/>
+
+	<activity android:configChanges="orientation|screenSize|keyboardHidden" android:icon="@drawable/ic_launcher_rb" android:label="@string/app_name" android:name="com.redbend.client.ui.LoadingActivity"/>
+    <activity android:configChanges="orientation|screenSize" android:icon="@drawable/ic_launcher_rb" android:label="@string/app_name" android:name="com.redbend.client.ui.ErrorHandler"/>
+    <activity android:configChanges="orientation|screenSize" android:icon="@drawable/ic_launcher_rb" android:label="@string/app_name" android:name="com.redbend.client.uialerts.ConfirmUIAlert"/>
+	<activity android:configChanges="orientation|screenSize" android:icon="@drawable/ic_launcher_rb" android:label="@string/app_name" android:name="com.redbend.client.uialerts.InfoUIAlert"/>
+	<activity android:configChanges="orientation|screenSize" android:icon="@drawable/ic_launcher_rb" android:label="@string/app_name" android:name="com.redbend.client.uialerts.InputUIAlert" android:windowSoftInputMode="adjustResize"/>
+    <activity android:configChanges="orientation|screenSize" android:icon="@drawable/ic_launcher_rb" android:label="@string/scomo_title" android:name="com.redbend.client.ui.ScomoConfirm"/>
+    <activity android:configChanges="orientation|screenSize" android:icon="@drawable/ic_launcher_rb" android:label="@string/scomo_title" android:name="com.redbend.client.ui.ScomoInstallConfirm"/>
+    <activity android:configChanges="orientation|screenSize" android:icon="@drawable/ic_launcher_rb" android:label="@string/scomo_title" android:name="com.redbend.client.ui.ScomoDownloadProgress"/>
+    <activity android:configChanges="orientation|screenSize" android:icon="@drawable/ic_launcher_rb" android:label="@string/scomo_title" android:name="com.redbend.client.ui.ScomoDownloadInterrupted"/>
+    <activity android:configChanges="orientation|screenSize" android:icon="@drawable/ic_launcher_rb" android:label="@string/scomo_title" android:name="com.redbend.client.ui.ScomoDownloadSuspend"/>
+	<activity android:configChanges="orientation|screenSize" android:icon="@drawable/ic_launcher_rb" android:label="@string/scomo_title" android:name="com.redbend.client.ui.ScomoInstallProgress"/>
+    <activity android:configChanges="orientation|screenSize" android:icon="@drawable/ic_launcher_rb" android:label="@string/scomo_title" android:name="com.redbend.client.ui.ScomoInstallDone"/>
+	<activity android:configChanges="orientation|screenSize" android:icon="@drawable/ic_launcher_rb" android:label="@string/scomo_title" android:name="com.redbend.client.ui.BatteryLow"/>
+	<activity android:configChanges="orientation|screenSize" android:icon="@drawable/ic_launcher_rb" android:label="@string/scomo_title" android:name="com.redbend.client.ui.ScomoPostponeConfirm"/>
+    <activity android:configChanges="orientation|screenSize" android:icon="@drawable/ic_launcher_rb" android:label="@string/app_name" android:name="com.redbend.client.ui.LawmoWipeResult"/>
+    <activity android:configChanges="orientation|screenSize" android:icon="@drawable/ic_launcher_rb" android:label="@string/app_name" android:name="com.redbend.client.ui.LawmoLockResult"/>
+    <activity android:configChanges="orientation|screenSize" android:icon="@drawable/ic_launcher_rb" android:label="@string/app_name" android:name="com.redbend.client.ui.RequestReboot"/>
+    <activity android:configChanges="orientation|screenSize" android:icon="@drawable/ic_launcher_rb" android:label="@string/app_name" android:name="com.redbend.client.ui.RequestRebootConfirm"/>
+
+    <activity android:configChanges="orientation|screenSize" android:name="com.redbend.swm_common.ui.SetPasswordPolicyUi" android:theme="@android:style/Theme.NoDisplay"/>
+    <activity android:configChanges="orientation|screenSize" android:name="com.redbend.swm_common.ui.SetEncryptionPolicyUi" android:theme="@android:style/Theme.NoDisplay"/>
+
+	<service android:exported="false" android:name="com.redbend.client.ClientService" android:stopWithTask="false"/>
+
+        <receiver android:enabled="true" android:name="com.redbend.client.DmcWapReceiver">
+    		<!-- device only-->
+    		<intent-filter>
+    			<action android:name="android.provider.Telephony.WAP_PUSH_RECEIVED"/>
+                <data android:mimeType="*/*"/>
+            </intent-filter>
+        </receiver>  
+
+    	<receiver android:enabled="true" android:name="com.redbend.client.DmcBootReceiver">
+                <intent-filter>
+                	<action android:name="android.intent.action.BOOT_COMPLETED"/>
+                </intent-filter>
+        </receiver>
+        
+		<receiver android:enabled="true" android:name="com.redbend.swm_common.DmcDeviceAdminReceiver" android:permission="android.permission.BIND_DEVICE_ADMIN">
+            <meta-data android:name="android.app.device_admin" android:resource="@xml/dev_admin"/>
+            <intent-filter>
+                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED"/>
+            </intent-filter>
+        </receiver>    
+        <receiver android:name="com.redbend.client.ScomoAlarmReceiver"/>
+        <receiver android:name="com.redbend.client.RBGcmReceiver" android:permission="com.google.android.c2dm.permission.SEND">
+		    <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION"/>
+                <action android:name="android.accounts.LOGIN_ACCOUNTS_CHANGED"/>                
+                <category android:name="com.redbend.client"/>
+            </intent-filter>
+        </receiver>    
+        
+         <receiver android:enabled="true" android:name="com.redbend.client.DeviceUpdateReceiver">
+            <intent-filter>
+                <action android:name="SwmClient.ENABLE_PERIODIC_CHECK_FOR_UPDATES"/>
+                <action android:name="SwmClient.DISABLE_PERIODIC_CHECK_FOR_UPDATES"/>
+                <action android:name="SwmClient.CHANGE_PERIODIC_CHECK_FOR_UPDATES"/>
+				<!-- 2016-08 Micronet/DS: Remove the normal CHECK_FOR_UPDATES_NOW Action
+					This will be pointed somewhere else below
+                <action android:name="SwmClient.CHECK_FOR_UPDATES_NOW"/>
+                -->
+                <action android:name="SwmClient.START_APPLICATION"/> 
+            </intent-filter>
+        </receiver>
+
+
+		<!-- 2016-08 Micronet/DS: START Add new receivers and service -->
+		<receiver android:name="com.redbend.client.micronet.MicronetBootReceiver">
+			<intent-filter>
+				<action android:name="android.intent.action.BOOT_COMPLETED"/>
+
+			</intent-filter>
+		</receiver>
+
+		<receiver android:name="com.redbend.client.micronet.MicronetAppReceiver">
+			<intent-filter>
+				<action android:name="SwmClient.CHECK_FOR_UPDATES_NOW"/>
+				<action android:name="com.redbend.client.micronet.INSTALL_NOW"/>
+			</intent-filter>
+		</receiver>
+
+		<service
+			android:name="com.redbend.client.micronet.MicronetBindingService"
+			android:permission="com.redbend.client.micronet.permission.CONTROL_FOTA"
+			android:enabled="true"
+			android:exported="true">
+			<intent-filter>
+				<action android:name="com.redbend.client.micronet.BIND"/>
+				<action android:name="com.redbend.client.micronet.PING"/>
+				<action android:name="com.redbend.client.micronet.ACQUIRE_INSTALL_LOCK"/>
+				<action android:name="com.redbend.client.micronet.RELEASE_INSTALL_LOCK"/>
+				<action android:name="com.redbend.client.micronet.SET_ROAMING_MODE"/>
+			</intent-filter>			
+		</service>
+		<!-- 2016-08 Micronet/DS: END Add new receivers and service -->
+
+    </application>
+</manifest>
