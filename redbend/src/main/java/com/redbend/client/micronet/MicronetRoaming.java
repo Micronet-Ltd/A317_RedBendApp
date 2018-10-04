@@ -1,15 +1,19 @@
 package com.redbend.client.micronet;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.ContextWrapper;
+import android.content.Intent;
 import android.content.SharedPreferences;
 
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.os.Handler;
 import android.util.Log;
 
 import com.redbend.client.BuildConfig;
 
+import com.redbend.client.StartupActivity;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -22,7 +26,7 @@ import java.nio.channels.FileChannel;
  * Created by dschmidt on 10/25/17.
  */
 
-public class MicronetRoaming {
+public class MicronetRoaming extends ContextWrapper{
 
     public static final String TAG = "RBC-Roaming";
 
@@ -53,6 +57,10 @@ public class MicronetRoaming {
 
 
     static boolean isInitialized = false; // set to true once we are initialized
+
+    public MicronetRoaming(Context base) {
+        super(base);
+    }
 
     //////////////////////////////////////////////////////////////////////
     // getInitialRoamingStatus()
@@ -148,8 +156,16 @@ public class MicronetRoaming {
 
 
         roamingMode = newRoamingMode;
-    } // changeRoamingMode()
+        Log.d(TAG, "Restarting redbend app");
+        Intent mStartActivity = new Intent(context, StartupActivity.class);
+        int mPendingIntentId = 123456;
+        PendingIntent mPendingIntent = PendingIntent.getActivity(context, mPendingIntentId,    mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
+        AlarmManager mgr = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+        mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
+        System.exit(0);
+        // Runtime.getRuntime().exit(0);
 
+    } // changeRoamingMode()
 
     //////////////////////////////////////////////////////////////////////
     // getRoamingMode()

@@ -14,7 +14,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 15
         versionCode 100201009
-        versionName "10.2.1.7-MN-4"
+        versionName "10.2.1.7-MN-5"
 
         ndk {
             moduleName "libvdmplat"
